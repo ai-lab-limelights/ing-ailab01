@@ -1,0 +1,965 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RunWave — One click. Every country. Paid.</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flyonui@2.4.1/flyonui.css">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        colors: {
+          rw: {
+            dark: '#0a0a0f',
+            darker: '#06060a',
+            surface: '#12121c',
+            surfaceLight: '#1a1a2e',
+            border: '#2a2a40',
+            electric: '#00d4ff',
+            electricDim: '#00a3c7',
+            neon: '#00ff88',
+            neonDim: '#00cc6a',
+            violet: '#7b61ff',
+            violetDim: '#5a3fd6',
+            text: '#e8e8f0',
+            textMuted: '#8888a0',
+            textDim: '#555570',
+            warning: '#ff6b4a',
+          }
+        },
+        fontFamily: {
+          display: ['Space Grotesk', 'sans-serif'],
+          body: ['Inter', 'sans-serif'],
+        }
+      }
+    }
+  }
+  </script>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #0a0a0f;
+      color: #e8e8f0;
+      overflow-x: hidden;
+    }
+
+    /* Animated gradient orbs */
+    .hero-bg {
+      position: relative;
+      overflow: hidden;
+    }
+    .hero-bg::before {
+      content: '';
+      position: absolute;
+      top: -40%;
+      left: -20%;
+      width: 80%;
+      height: 120%;
+      background: radial-gradient(ellipse at center, rgba(0,212,255,0.12) 0%, transparent 60%);
+      animation: orbFloat 14s ease-in-out infinite alternate;
+    }
+    .hero-bg::after {
+      content: '';
+      position: absolute;
+      bottom: -30%;
+      right: -15%;
+      width: 70%;
+      height: 100%;
+      background: radial-gradient(ellipse at center, rgba(123,97,255,0.10) 0%, transparent 55%);
+      animation: orbFloat2 18s ease-in-out infinite alternate;
+    }
+    @keyframes orbFloat {
+      0% { transform: translate(0, 0) scale(1); }
+      50% { transform: translate(5%, -3%) scale(1.05); }
+      100% { transform: translate(-3%, 2%) scale(0.97); }
+    }
+    @keyframes orbFloat2 {
+      0% { transform: translate(0, 0) scale(1); }
+      50% { transform: translate(-4%, 3%) scale(1.03); }
+      100% { transform: translate(3%, -2%) scale(0.98); }
+    }
+
+    /* Noise grain overlay */
+    .grain::after {
+      content: '';
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      opacity: 0.025;
+      z-index: 9999;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    }
+
+    /* Electric glow effect on hover */
+    .glow-btn {
+      position: relative;
+      transition: all 0.3s ease;
+    }
+    .glow-btn::before {
+      content: '';
+      position: absolute;
+      inset: -2px;
+      border-radius: inherit;
+      background: linear-gradient(135deg, #00d4ff, #7b61ff, #00ff88);
+      z-index: -1;
+      opacity: 0;
+      filter: blur(12px);
+      transition: opacity 0.3s ease;
+    }
+    .glow-btn:hover::before {
+      opacity: 0.6;
+    }
+
+    /* Scroll animations */
+    [data-animate] {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    [data-animate].animate-visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    [data-animate-delay="1"] { transition-delay: 0.1s; }
+    [data-animate-delay="2"] { transition-delay: 0.2s; }
+    [data-animate-delay="3"] { transition-delay: 0.3s; }
+    [data-animate-delay="4"] { transition-delay: 0.4s; }
+
+    /* Pulsing dot for "live" indicators */
+    @keyframes pulse-dot {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.5; transform: scale(1.5); }
+    }
+    .pulse-dot {
+      animation: pulse-dot 2s ease-in-out infinite;
+    }
+
+    /* Horizontal scrolling ticker */
+    @keyframes ticker {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+    .ticker-track {
+      animation: ticker 30s linear infinite;
+    }
+
+    /* Electric border animation */
+    @keyframes borderPulse {
+      0%, 100% { border-color: rgba(0,212,255,0.2); }
+      50% { border-color: rgba(0,212,255,0.5); }
+    }
+
+    /* Number counter animation */
+    .count-up {
+      font-variant-numeric: tabular-nums;
+    }
+
+    /* Smooth scroll */
+    html {
+      scroll-behavior: smooth;
+    }
+
+    /* Nav backdrop */
+    .nav-glass {
+      backdrop-filter: blur(20px) saturate(1.5);
+      -webkit-backdrop-filter: blur(20px) saturate(1.5);
+    }
+
+    /* Step connector line */
+    .step-line {
+      background: linear-gradient(to bottom, #00d4ff, #7b61ff);
+    }
+
+    /* Dashboard mockup styling */
+    .dashboard-row {
+      transition: background-color 0.2s ease;
+    }
+    .dashboard-row:hover {
+      background-color: rgba(0,212,255,0.05);
+    }
+  </style>
+</head>
+<body class="grain">
+
+  <!-- ========== FIXED NAVBAR ========== -->
+  <nav class="fixed top-0 left-0 right-0 z-50 nav-glass bg-rw-dark/90 border-b border-rw-border px-6 py-3.5" data-animate>
+    <div class="max-w-5xl mx-auto flex items-center justify-between">
+      <a href="#" class="font-display font-bold text-base md:text-lg text-white tracking-tight flex items-center gap-2">
+        <span class="inline-flex w-7 h-7 rounded-lg bg-gradient-to-br from-rw-electric to-rw-violet items-center justify-center">
+          <svg class="w-4 h-4 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+          </svg>
+        </span>
+        RunWave
+      </a>
+      <div class="flex items-center gap-6">
+        <a href="#why" class="hidden md:inline text-rw-textMuted hover:text-white transition-colors text-sm">Why we exist</a>
+        <a href="#how" class="hidden md:inline text-rw-textMuted hover:text-white transition-colors text-sm">How it works</a>
+        <a href="#how" class="bg-rw-electric text-rw-darker font-display font-semibold text-sm px-5 py-2 rounded-full hover:bg-white transition-colors">See how it works</a>
+      </div>
+    </div>
+  </nav>
+
+
+  <!-- ========== HERO — Stats-Led + Centered Statement ========== -->
+  <section class="hero-bg min-h-screen flex flex-col justify-center items-center text-center px-6 pt-24 pb-16 relative">
+    <div class="relative z-10 max-w-4xl mx-auto">
+
+      <!-- Live badge -->
+      <div class="inline-flex items-center gap-2 bg-rw-surface/60 border border-rw-border rounded-full px-4 py-1.5 mb-8" data-animate>
+        <span class="w-2 h-2 rounded-full bg-rw-neon pulse-dot"></span>
+        <span class="text-xs font-medium text-rw-textMuted uppercase tracking-widest">Live in 80+ countries</span>
+      </div>
+
+      <!-- Headline -->
+      <h1 class="font-display font-bold text-5xl sm:text-6xl md:text-7xl lg:text-8xl leading-[0.95] tracking-tight mb-6" data-animate data-animate-delay="1">
+        <span class="text-white">One click.</span><br>
+        <span class="bg-gradient-to-r from-rw-electric via-rw-violet to-rw-neon bg-clip-text text-transparent">Every country.</span><br>
+        <span class="text-white">Paid.</span>
+      </h1>
+
+      <!-- Sub-headline -->
+      <p class="text-rw-textMuted text-lg md:text-xl max-w-2xl mx-auto mb-10 leading-relaxed" data-animate data-animate-delay="2">
+        One AI engine runs payroll in every country on earth — no local partners, no tax consultants, no humans slowing you down.
+      </p>
+
+      <!-- CTA -->
+      <div class="flex flex-col sm:flex-row items-center justify-center gap-4" data-animate data-animate-delay="3">
+        <a href="#how" class="glow-btn bg-rw-electric text-rw-darker font-display font-semibold text-base px-8 py-3.5 rounded-full hover:bg-white transition-all">
+          See how it works
+        </a>
+        <a href="#why" class="text-rw-textMuted hover:text-white transition-colors text-sm font-medium flex items-center gap-2">
+          Why we exist
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
+        </a>
+      </div>
+
+      <!-- Stats bar -->
+      <div class="mt-16 grid grid-cols-3 gap-4 max-w-xl mx-auto" data-animate data-animate-delay="4">
+        <div class="text-center">
+          <div class="font-display font-bold text-2xl md:text-3xl text-white count-up" data-count="80">80+</div>
+          <div class="text-xs text-rw-textDim mt-1 uppercase tracking-wider">Countries</div>
+        </div>
+        <div class="text-center border-x border-rw-border">
+          <div class="font-display font-bold text-2xl md:text-3xl text-white count-up">14<span class="text-rw-electric">s</span></div>
+          <div class="text-xs text-rw-textDim mt-1 uppercase tracking-wider">Avg. calculation</div>
+        </div>
+        <div class="text-center">
+          <div class="font-display font-bold text-2xl md:text-3xl text-white count-up">0</div>
+          <div class="text-xs text-rw-textDim mt-1 uppercase tracking-wider">Local partners</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Scroll indicator -->
+    <div class="absolute bottom-8 left-1/2 -translate-x-1/2 z-10 flex flex-col items-center gap-2 opacity-40">
+      <div class="w-5 h-8 border-2 border-rw-textDim rounded-full flex items-start justify-center p-1">
+        <div class="w-1 h-2 bg-rw-textMuted rounded-full animate-bounce"></div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ========== TICKER — Country names scrolling ========== -->
+  <div class="border-y border-rw-border bg-rw-darker py-3 overflow-hidden">
+    <div class="ticker-track flex items-center gap-8 whitespace-nowrap" style="width: max-content;">
+      <span class="text-xs text-rw-textDim uppercase tracking-[0.25em] flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-rw-neon"></span>Netherlands</span>
+      <span class="text-xs text-rw-textDim uppercase tracking-[0.25em] flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-rw-electric"></span>Germany</span>
+      <span class="text-xs text-rw-textDim uppercase tracking-[0.25em] flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-rw-violet"></span>Brazil</span>
+      <span class="text-xs text-rw-textDim uppercase tracking-[0.25em] flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-rw-neon"></span>United States</span>
+      <span class="text-xs text-rw-textDim uppercase tracking-[0.25em] flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-rw-electric"></span>Singapore</span>
+      <span class="text-xs text-rw-textDim uppercase tracking-[0.25em] flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-rw-violet"></span>Japan</span>
+      <span class="text-xs text-rw-textDim uppercase tracking-[0.25em] flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-rw-neon"></span>United Kingdom</span>
+      <span class="text-xs text-rw-textDim uppercase tracking-[0.25em] flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-rw-electric"></span>France</span>
+      <span class="text-xs text-rw-textDim uppercase tracking-[0.25em] flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-rw-violet"></span>India</span>
+      <span class="text-xs text-rw-textDim uppercase tracking-[0.25em] flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-rw-neon"></span>Australia</span>
+      <span class="text-xs text-rw-textDim uppercase tracking-[0.25em] flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-rw-electric"></span>Portugal</span>
+      <span class="text-xs text-rw-textDim uppercase tracking-[0.25em] flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-rw-violet"></span>Spain</span>
+      <!-- Duplicate for seamless loop -->
+      <span class="text-xs text-rw-textDim uppercase tracking-[0.25em] flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-rw-neon"></span>Netherlands</span>
+      <span class="text-xs text-rw-textDim uppercase tracking-[0.25em] flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-rw-electric"></span>Germany</span>
+      <span class="text-xs text-rw-textDim uppercase tracking-[0.25em] flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-rw-violet"></span>Brazil</span>
+      <span class="text-xs text-rw-textDim uppercase tracking-[0.25em] flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-rw-neon"></span>United States</span>
+      <span class="text-xs text-rw-textDim uppercase tracking-[0.25em] flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-rw-electric"></span>Singapore</span>
+      <span class="text-xs text-rw-textDim uppercase tracking-[0.25em] flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-rw-violet"></span>Japan</span>
+      <span class="text-xs text-rw-textDim uppercase tracking-[0.25em] flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-rw-neon"></span>United Kingdom</span>
+      <span class="text-xs text-rw-textDim uppercase tracking-[0.25em] flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-rw-electric"></span>France</span>
+      <span class="text-xs text-rw-textDim uppercase tracking-[0.25em] flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-rw-violet"></span>India</span>
+      <span class="text-xs text-rw-textDim uppercase tracking-[0.25em] flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-rw-neon"></span>Australia</span>
+      <span class="text-xs text-rw-textDim uppercase tracking-[0.25em] flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-rw-electric"></span>Portugal</span>
+      <span class="text-xs text-rw-textDim uppercase tracking-[0.25em] flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-rw-violet"></span>Spain</span>
+    </div>
+  </div>
+
+
+  <!-- ========== PROBLEM — The industry is broken ========== -->
+  <section id="why" class="py-24 md:py-32 px-6 relative">
+    <div class="max-w-4xl mx-auto">
+
+      <!-- Provocative opener -->
+      <div class="mb-16" data-animate>
+        <span class="inline-block text-rw-warning font-display font-semibold text-sm uppercase tracking-widest mb-4">The ugly truth</span>
+        <h2 class="font-display font-bold text-3xl md:text-5xl text-white leading-tight">
+          Global payroll is a mess.
+        </h2>
+      </div>
+
+      <!-- Split layout: pain on left, visual on right -->
+      <div class="grid md:grid-cols-5 gap-12 items-start">
+        <div class="md:col-span-3" data-animate data-animate-delay="1">
+          <p class="text-rw-textMuted text-lg md:text-xl leading-relaxed mb-8">
+            You're paying three providers, a tax consultant, and a compliance advisor just to get salaries out in five countries. Every new country means another partner, another contract, another invoice per employee per month.
+          </p>
+          <p class="text-rw-textMuted text-lg md:text-xl leading-relaxed">
+            You spend more time managing your payroll vendors than actually managing your team.
+          </p>
+        </div>
+
+        <!-- Visual: stacked "invoices" -->
+        <div class="md:col-span-2 relative" data-animate data-animate-delay="2">
+          <div class="space-y-3">
+            <div class="bg-rw-surface border border-rw-border rounded-lg p-4 transform rotate-1">
+              <div class="flex justify-between items-center mb-2">
+                <span class="text-xs text-rw-textDim uppercase tracking-wider">Invoice #4821</span>
+                <span class="text-xs text-rw-warning font-semibold">OVERDUE</span>
+              </div>
+              <div class="text-sm text-rw-textMuted">PayrollCo Germany GmbH</div>
+              <div class="font-display font-bold text-white mt-1">EUR 3,240.00</div>
+            </div>
+            <div class="bg-rw-surface border border-rw-border rounded-lg p-4 transform -rotate-1">
+              <div class="flex justify-between items-center mb-2">
+                <span class="text-xs text-rw-textDim uppercase tracking-wider">Invoice #1199</span>
+                <span class="text-xs text-rw-textDim font-semibold">PENDING</span>
+              </div>
+              <div class="text-sm text-rw-textMuted">SGPay Asia Pte Ltd</div>
+              <div class="font-display font-bold text-white mt-1">SGD 5,880.00</div>
+            </div>
+            <div class="bg-rw-surface border border-rw-border rounded-lg p-4 transform rotate-0.5">
+              <div class="flex justify-between items-center mb-2">
+                <span class="text-xs text-rw-textDim uppercase tracking-wider">Invoice #0773</span>
+                <span class="text-xs text-rw-textDim font-semibold">PENDING</span>
+              </div>
+              <div class="text-sm text-rw-textMuted">Brasil Folha Servicos</div>
+              <div class="font-display font-bold text-white mt-1">BRL 12,450.00</div>
+            </div>
+            <div class="bg-rw-surface border border-rw-border rounded-lg p-4 opacity-50 transform -rotate-0.5">
+              <div class="flex justify-between items-center mb-2">
+                <span class="text-xs text-rw-textDim uppercase tracking-wider">Invoice #0291</span>
+                <span class="text-xs text-rw-textDim font-semibold">PENDING</span>
+              </div>
+              <div class="text-sm text-rw-textMuted">US PayPartners LLC</div>
+              <div class="font-display font-bold text-white mt-1">USD 7,120.00</div>
+            </div>
+          </div>
+          <!-- Red total -->
+          <div class="absolute -bottom-6 -right-2 bg-rw-warning/10 border border-rw-warning/30 rounded-lg px-4 py-2">
+            <span class="text-rw-warning font-display font-bold text-sm">4 vendors. 4 invoices. Every month.</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ========== SOLUTION — One engine. Every country. ========== -->
+  <section class="py-24 md:py-32 px-6 bg-rw-darker relative overflow-hidden">
+    <!-- Subtle grid background -->
+    <div class="absolute inset-0 opacity-[0.03]" style="background-image: radial-gradient(circle, #00d4ff 1px, transparent 1px); background-size: 32px 32px;"></div>
+
+    <div class="max-w-5xl mx-auto relative z-10">
+      <div class="text-center mb-20" data-animate>
+        <span class="inline-block text-rw-electric font-display font-semibold text-sm uppercase tracking-widest mb-4">The RunWave way</span>
+        <h2 class="font-display font-bold text-3xl md:text-5xl text-white leading-tight">
+          One engine. Every country.
+        </h2>
+      </div>
+
+      <!-- Three features as alternating rows, not cards -->
+      <div class="space-y-20">
+
+        <!-- Feature 1 -->
+        <div class="grid md:grid-cols-2 gap-10 items-center" data-animate>
+          <div>
+            <div class="w-12 h-12 rounded-xl bg-rw-electric/10 border border-rw-electric/20 flex items-center justify-center mb-5">
+              <svg class="w-6 h-6 text-rw-electric" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+              </svg>
+            </div>
+            <h3 class="font-display font-bold text-xl md:text-2xl text-white mb-3">Real-time compliance</h3>
+            <p class="text-rw-textMuted text-base md:text-lg leading-relaxed">
+              RunWave reads every country's tax rules, labor laws, and filing deadlines as they change. Not quarterly updates. Live.
+            </p>
+          </div>
+          <div class="bg-rw-surface border border-rw-border rounded-2xl p-6 font-mono text-sm">
+            <div class="flex items-center gap-2 mb-4">
+              <span class="w-2 h-2 rounded-full bg-rw-neon pulse-dot"></span>
+              <span class="text-rw-neon text-xs uppercase tracking-wider">Live feed</span>
+            </div>
+            <div class="space-y-2 text-rw-textDim">
+              <div class="flex items-center gap-3">
+                <span class="text-rw-textDim text-xs">12:04</span>
+                <span class="text-rw-electric">DE</span>
+                <span>Sozialversicherung rate updated: 18.6% <span class="text-rw-neon">applied</span></span>
+              </div>
+              <div class="flex items-center gap-3">
+                <span class="text-rw-textDim text-xs">12:03</span>
+                <span class="text-rw-violet">BR</span>
+                <span>INSS threshold changed for 2026 <span class="text-rw-neon">applied</span></span>
+              </div>
+              <div class="flex items-center gap-3">
+                <span class="text-rw-textDim text-xs">11:58</span>
+                <span class="text-rw-electric">NL</span>
+                <span>30% ruling eligibility rule updated <span class="text-rw-neon">applied</span></span>
+              </div>
+              <div class="flex items-center gap-3">
+                <span class="text-rw-textDim text-xs">11:52</span>
+                <span class="text-rw-violet">US</span>
+                <span>CA state tax bracket adjustment <span class="text-rw-neon">applied</span></span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Feature 2 -->
+        <div class="grid md:grid-cols-2 gap-10 items-center" data-animate>
+          <div class="md:order-2">
+            <div class="w-12 h-12 rounded-xl bg-rw-violet/10 border border-rw-violet/20 flex items-center justify-center mb-5">
+              <svg class="w-6 h-6 text-rw-violet" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9"/>
+              </svg>
+            </div>
+            <h3 class="font-display font-bold text-xl md:text-2xl text-white mb-3">Zero local partners</h3>
+            <p class="text-rw-textMuted text-base md:text-lg leading-relaxed">
+              No middlemen in S&atilde;o Paulo, no agencies in Berlin, no consultants in Singapore. The AI handles it all, directly.
+            </p>
+          </div>
+          <div class="md:order-1 relative">
+            <div class="bg-rw-surface border border-rw-border rounded-2xl p-6">
+              <div class="text-center mb-4">
+                <span class="text-xs text-rw-textDim uppercase tracking-wider">Traditional setup</span>
+              </div>
+              <div class="space-y-2">
+                <div class="flex items-center justify-between bg-rw-dark/50 rounded-lg px-4 py-2.5">
+                  <span class="text-sm text-rw-textMuted">Netherlands</span>
+                  <span class="text-xs text-rw-warning line-through">Local provider</span>
+                </div>
+                <div class="flex items-center justify-between bg-rw-dark/50 rounded-lg px-4 py-2.5">
+                  <span class="text-sm text-rw-textMuted">Germany</span>
+                  <span class="text-xs text-rw-warning line-through">Local provider</span>
+                </div>
+                <div class="flex items-center justify-between bg-rw-dark/50 rounded-lg px-4 py-2.5">
+                  <span class="text-sm text-rw-textMuted">Brazil</span>
+                  <span class="text-xs text-rw-warning line-through">Local provider</span>
+                </div>
+                <div class="flex items-center justify-between bg-rw-dark/50 rounded-lg px-4 py-2.5">
+                  <span class="text-sm text-rw-textMuted">Singapore</span>
+                  <span class="text-xs text-rw-warning line-through">Local provider</span>
+                </div>
+              </div>
+              <div class="mt-4 pt-4 border-t border-rw-border text-center">
+                <span class="font-display font-bold text-rw-electric text-sm">RunWave: 1 engine covers all</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Feature 3 -->
+        <div class="grid md:grid-cols-2 gap-10 items-center" data-animate>
+          <div>
+            <div class="w-12 h-12 rounded-xl bg-rw-neon/10 border border-rw-neon/20 flex items-center justify-center mb-5">
+              <svg class="w-6 h-6 text-rw-neon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+              </svg>
+            </div>
+            <h3 class="font-display font-bold text-xl md:text-2xl text-white mb-3">One flat price</h3>
+            <p class="text-rw-textMuted text-base md:text-lg leading-relaxed">
+              Pay per employee. Not per employee per country. Your costs drop the moment you connect.
+            </p>
+          </div>
+          <div class="bg-rw-surface border border-rw-border rounded-2xl p-6">
+            <div class="flex items-center justify-between mb-6">
+              <span class="text-xs text-rw-textDim uppercase tracking-wider">Pricing comparison</span>
+            </div>
+            <div class="space-y-4">
+              <div>
+                <div class="flex justify-between text-sm mb-1.5">
+                  <span class="text-rw-textMuted">Traditional (5 countries)</span>
+                  <span class="text-rw-warning font-display font-bold">~$85 /emp /mo</span>
+                </div>
+                <div class="w-full h-2 bg-rw-dark rounded-full overflow-hidden">
+                  <div class="h-full bg-gradient-to-r from-rw-warning/60 to-rw-warning rounded-full" style="width: 85%"></div>
+                </div>
+              </div>
+              <div>
+                <div class="flex justify-between text-sm mb-1.5">
+                  <span class="text-rw-textMuted">RunWave (any country)</span>
+                  <span class="text-rw-neon font-display font-bold">$29 /emp /mo</span>
+                </div>
+                <div class="w-full h-2 bg-rw-dark rounded-full overflow-hidden">
+                  <div class="h-full bg-gradient-to-r from-rw-neon/60 to-rw-neon rounded-full" style="width: 29%"></div>
+                </div>
+              </div>
+            </div>
+            <div class="mt-5 pt-4 border-t border-rw-border">
+              <span class="text-rw-neon font-display font-semibold text-sm">Save 66% on average</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ========== HOW IT WORKS — Dashboard Showcase ========== -->
+  <section id="how" class="py-24 md:py-32 px-6">
+    <div class="max-w-6xl mx-auto">
+
+      <div class="text-center mb-8" data-animate>
+        <span class="inline-block text-rw-electric font-display font-semibold text-sm uppercase tracking-widest mb-4">How it works</span>
+        <h2 class="font-display font-bold text-3xl md:text-5xl text-white leading-tight mb-4">
+          Three steps. Zero friction.
+        </h2>
+        <p class="text-rw-textMuted text-lg max-w-2xl mx-auto">From upload to paid in minutes, not weeks.</p>
+      </div>
+
+      <!-- Steps as three clean cards -->
+      <div class="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto mb-20">
+
+        <!-- Step 1 -->
+        <div class="bg-rw-surface border border-rw-border rounded-2xl p-8 relative" data-animate>
+          <div class="w-10 h-10 rounded-full bg-rw-electric/10 flex items-center justify-center font-display font-bold text-rw-electric text-sm mb-5">
+            1
+          </div>
+          <h3 class="font-display font-bold text-lg md:text-xl text-white mb-3">Connect your team</h3>
+          <p class="text-rw-textMuted text-base leading-relaxed">
+            Upload your employee list or sync from your HR tool. RunWave detects every country, contract type, and tax situation automatically.
+          </p>
+        </div>
+
+        <!-- Step 2 -->
+        <div class="bg-rw-surface border border-rw-border rounded-2xl p-8 relative" data-animate data-animate-delay="1">
+          <div class="w-10 h-10 rounded-full bg-rw-violet/10 flex items-center justify-center font-display font-bold text-rw-violet text-sm mb-5">
+            2
+          </div>
+          <h3 class="font-display font-bold text-lg md:text-xl text-white mb-3">RunWave calculates everything</h3>
+          <p class="text-rw-textMuted text-base leading-relaxed">
+            Gross-to-net, local taxes, social contributions, pension, benefits — computed in seconds for every employee in every jurisdiction.
+          </p>
+        </div>
+
+        <!-- Step 3 -->
+        <div class="bg-rw-surface border border-rw-border rounded-2xl p-8 relative" data-animate data-animate-delay="2">
+          <div class="w-10 h-10 rounded-full bg-rw-neon/10 flex items-center justify-center font-display font-bold text-rw-neon text-sm mb-5">
+            3
+          </div>
+          <h3 class="font-display font-bold text-lg md:text-xl text-white mb-3">Payroll goes out. Done.</h3>
+          <p class="text-rw-textMuted text-base leading-relaxed">
+            Salaries land on time, payslips are generated, tax filings are submitted. You didn't lift a finger.
+          </p>
+        </div>
+
+      </div>
+
+      <!-- Browser mockup with dashboard -->
+      <div data-animate>
+        <div class="mockup-browser border border-rw-border bg-rw-surface shadow-2xl shadow-rw-electric/5">
+          <div class="mockup-browser-toolbar">
+            <div class="input bg-rw-dark border-rw-border text-rw-textDim text-sm">https://app.runwave.io/payroll</div>
+          </div>
+          <div class="border-t border-rw-border bg-rw-dark">
+            <!-- Dashboard content built in HTML -->
+            <div class="p-6">
+              <!-- Top bar -->
+              <div class="flex items-center justify-between mb-6">
+                <div class="flex items-center gap-3">
+                  <div class="font-display font-bold text-white text-lg">Payroll Run</div>
+                  <span class="text-xs bg-rw-neon/10 text-rw-neon px-2.5 py-0.5 rounded-full font-medium">March 2026</span>
+                </div>
+                <div class="flex items-center gap-2">
+                  <span class="text-xs text-rw-textDim">52 employees</span>
+                  <span class="text-rw-textDim">|</span>
+                  <span class="text-xs text-rw-textDim">5 countries</span>
+                  <button class="ml-3 bg-rw-electric text-rw-darker text-xs font-display font-semibold px-4 py-1.5 rounded-lg">Run Payroll</button>
+                </div>
+              </div>
+
+              <!-- Stats row -->
+              <div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-6">
+                <div class="bg-rw-surface rounded-lg p-3 border border-rw-border">
+                  <div class="text-xs text-rw-textDim mb-1">Total Gross</div>
+                  <div class="font-display font-bold text-white text-sm">EUR 284,320</div>
+                </div>
+                <div class="bg-rw-surface rounded-lg p-3 border border-rw-border">
+                  <div class="text-xs text-rw-textDim mb-1">Total Net</div>
+                  <div class="font-display font-bold text-white text-sm">EUR 198,024</div>
+                </div>
+                <div class="bg-rw-surface rounded-lg p-3 border border-rw-border">
+                  <div class="text-xs text-rw-textDim mb-1">Tax & Social</div>
+                  <div class="font-display font-bold text-white text-sm">EUR 86,296</div>
+                </div>
+                <div class="bg-rw-surface rounded-lg p-3 border border-rw-border">
+                  <div class="text-xs text-rw-textDim mb-1">Status</div>
+                  <div class="font-display font-bold text-rw-neon text-sm flex items-center gap-1.5">
+                    <span class="w-1.5 h-1.5 rounded-full bg-rw-neon pulse-dot"></span>
+                    All Paid
+                  </div>
+                </div>
+              </div>
+
+              <!-- Employee table -->
+              <div class="rounded-lg border border-rw-border overflow-x-auto">
+                <!-- Table header -->
+                <div class="grid grid-cols-12 gap-2 px-4 py-2.5 bg-rw-surface text-xs text-rw-textDim uppercase tracking-wider min-w-[640px]">
+                  <div class="col-span-3">Employee</div>
+                  <div class="col-span-2">Country</div>
+                  <div class="col-span-2 text-right">Gross</div>
+                  <div class="col-span-2 text-right">Net</div>
+                  <div class="col-span-1 text-right">Tax %</div>
+                  <div class="col-span-2 text-center">Status</div>
+                </div>
+
+                <!-- Rows -->
+                <div class="dashboard-row grid grid-cols-12 gap-2 px-4 py-3 border-t border-rw-border/50 items-center min-w-[640px]">
+                  <div class="col-span-3 flex items-center gap-2">
+                    <div class="w-7 h-7 rounded-full bg-rw-electric/20 flex items-center justify-center text-xs text-rw-electric font-semibold">SV</div>
+                    <span class="text-sm text-white">Sophie Vermeer</span>
+                  </div>
+                  <div class="col-span-2 text-sm text-rw-textMuted flex items-center gap-1.5">
+                    <span class="text-base">&#127475;&#127473;</span> Netherlands
+                  </div>
+                  <div class="col-span-2 text-right text-sm text-white font-display">EUR 6,200</div>
+                  <div class="col-span-2 text-right text-sm text-white font-display">EUR 4,154</div>
+                  <div class="col-span-1 text-right text-sm text-rw-textMuted">33.0%</div>
+                  <div class="col-span-2 text-center">
+                    <span class="inline-flex items-center gap-1 text-xs bg-rw-neon/10 text-rw-neon px-2 py-0.5 rounded-full font-medium">
+                      <svg class="w-3 h-3" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+                      Paid
+                    </span>
+                  </div>
+                </div>
+
+                <div class="dashboard-row grid grid-cols-12 gap-2 px-4 py-3 border-t border-rw-border/50 items-center min-w-[640px]">
+                  <div class="col-span-3 flex items-center gap-2">
+                    <div class="w-7 h-7 rounded-full bg-rw-violet/20 flex items-center justify-center text-xs text-rw-violet font-semibold">MK</div>
+                    <span class="text-sm text-white">Max Keller</span>
+                  </div>
+                  <div class="col-span-2 text-sm text-rw-textMuted flex items-center gap-1.5">
+                    <span class="text-base">&#127465;&#127466;</span> Germany
+                  </div>
+                  <div class="col-span-2 text-right text-sm text-white font-display">EUR 5,800</div>
+                  <div class="col-span-2 text-right text-sm text-white font-display">EUR 3,654</div>
+                  <div class="col-span-1 text-right text-sm text-rw-textMuted">37.0%</div>
+                  <div class="col-span-2 text-center">
+                    <span class="inline-flex items-center gap-1 text-xs bg-rw-neon/10 text-rw-neon px-2 py-0.5 rounded-full font-medium">
+                      <svg class="w-3 h-3" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+                      Paid
+                    </span>
+                  </div>
+                </div>
+
+                <div class="dashboard-row grid grid-cols-12 gap-2 px-4 py-3 border-t border-rw-border/50 items-center min-w-[640px]">
+                  <div class="col-span-3 flex items-center gap-2">
+                    <div class="w-7 h-7 rounded-full bg-rw-neon/20 flex items-center justify-center text-xs text-rw-neon font-semibold">LC</div>
+                    <span class="text-sm text-white">Lucas Costa</span>
+                  </div>
+                  <div class="col-span-2 text-sm text-rw-textMuted flex items-center gap-1.5">
+                    <span class="text-base">&#127463;&#127479;</span> Brazil
+                  </div>
+                  <div class="col-span-2 text-right text-sm text-white font-display">BRL 14,500</div>
+                  <div class="col-span-2 text-right text-sm text-white font-display">BRL 10,585</div>
+                  <div class="col-span-1 text-right text-sm text-rw-textMuted">27.0%</div>
+                  <div class="col-span-2 text-center">
+                    <span class="inline-flex items-center gap-1 text-xs bg-rw-neon/10 text-rw-neon px-2 py-0.5 rounded-full font-medium">
+                      <svg class="w-3 h-3" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+                      Paid
+                    </span>
+                  </div>
+                </div>
+
+                <div class="dashboard-row grid grid-cols-12 gap-2 px-4 py-3 border-t border-rw-border/50 items-center min-w-[640px]">
+                  <div class="col-span-3 flex items-center gap-2">
+                    <div class="w-7 h-7 rounded-full bg-rw-electric/20 flex items-center justify-center text-xs text-rw-electric font-semibold">JC</div>
+                    <span class="text-sm text-white">James Chen</span>
+                  </div>
+                  <div class="col-span-2 text-sm text-rw-textMuted flex items-center gap-1.5">
+                    <span class="text-base">&#127480;&#127468;</span> Singapore
+                  </div>
+                  <div class="col-span-2 text-right text-sm text-white font-display">SGD 8,400</div>
+                  <div class="col-span-2 text-right text-sm text-white font-display">SGD 7,140</div>
+                  <div class="col-span-1 text-right text-sm text-rw-textMuted">15.0%</div>
+                  <div class="col-span-2 text-center">
+                    <span class="inline-flex items-center gap-1 text-xs bg-rw-neon/10 text-rw-neon px-2 py-0.5 rounded-full font-medium">
+                      <svg class="w-3 h-3" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+                      Paid
+                    </span>
+                  </div>
+                </div>
+
+                <div class="dashboard-row grid grid-cols-12 gap-2 px-4 py-3 border-t border-rw-border/50 items-center min-w-[640px]">
+                  <div class="col-span-3 flex items-center gap-2">
+                    <div class="w-7 h-7 rounded-full bg-rw-violet/20 flex items-center justify-center text-xs text-rw-violet font-semibold">SR</div>
+                    <span class="text-sm text-white">Sarah Rodriguez</span>
+                  </div>
+                  <div class="col-span-2 text-sm text-rw-textMuted flex items-center gap-1.5">
+                    <span class="text-base">&#127482;&#127480;</span> United States
+                  </div>
+                  <div class="col-span-2 text-right text-sm text-white font-display">USD 7,800</div>
+                  <div class="col-span-2 text-right text-sm text-white font-display">USD 5,538</div>
+                  <div class="col-span-1 text-right text-sm text-rw-textMuted">29.0%</div>
+                  <div class="col-span-2 text-center">
+                    <span class="inline-flex items-center gap-1 text-xs bg-rw-neon/10 text-rw-neon px-2 py-0.5 rounded-full font-medium">
+                      <svg class="w-3 h-3" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+                      Paid
+                    </span>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ========== DANGER — Why incumbents should worry ========== -->
+  <section class="py-24 md:py-32 px-6 relative overflow-hidden">
+    <!-- Red/warning glow -->
+    <div class="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[300px] bg-rw-warning/5 rounded-full blur-[100px]"></div>
+
+    <div class="max-w-4xl mx-auto relative z-10">
+      <div class="text-center mb-16" data-animate>
+        <span class="inline-block text-rw-warning font-display font-semibold text-sm uppercase tracking-widest mb-4">The threat</span>
+        <h2 class="font-display font-bold text-2xl md:text-4xl lg:text-5xl text-white leading-tight max-w-3xl mx-auto">
+          Every global payroll company is a middleman — and RunWave just made middlemen obsolete.
+        </h2>
+      </div>
+
+      <!-- Danger bullets as stark blocks, not cards -->
+      <div class="space-y-6 max-w-3xl mx-auto">
+        <div class="flex items-start gap-5 p-6 rounded-xl border border-rw-warning/20 bg-rw-warning/[0.03]" data-animate>
+          <div class="shrink-0 w-10 h-10 rounded-lg bg-rw-warning/10 flex items-center justify-center mt-0.5">
+            <svg class="w-5 h-5 text-rw-warning" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/>
+            </svg>
+          </div>
+          <p class="text-rw-text text-base md:text-lg leading-relaxed">
+            The per-employee-per-country pricing model collapses overnight when one AI does the work of 40 local partners.
+          </p>
+        </div>
+
+        <div class="flex items-start gap-5 p-6 rounded-xl border border-rw-warning/20 bg-rw-warning/[0.03]" data-animate data-animate-delay="1">
+          <div class="shrink-0 w-10 h-10 rounded-lg bg-rw-warning/10 flex items-center justify-center mt-0.5">
+            <svg class="w-5 h-5 text-rw-warning" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/>
+            </svg>
+          </div>
+          <p class="text-rw-text text-base md:text-lg leading-relaxed">
+            Incumbents can't rip out their partner networks without destroying the business model they depend on.
+          </p>
+        </div>
+
+        <div class="flex items-start gap-5 p-6 rounded-xl border border-rw-warning/20 bg-rw-warning/[0.03]" data-animate data-animate-delay="2">
+          <div class="shrink-0 w-10 h-10 rounded-lg bg-rw-warning/10 flex items-center justify-center mt-0.5">
+            <svg class="w-5 h-5 text-rw-warning" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+            </svg>
+          </div>
+          <p class="text-rw-text text-base md:text-lg leading-relaxed">
+            By the time they build their own AI engine, RunWave already runs payroll for their fastest-growing customers.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ========== CUSTOMER — Built for teams that move fast ========== -->
+  <section class="py-24 md:py-32 px-6 bg-rw-darker">
+    <div class="max-w-4xl mx-auto">
+      <div class="grid md:grid-cols-2 gap-12 items-center">
+        <div data-animate>
+          <span class="inline-block text-rw-neon font-display font-semibold text-sm uppercase tracking-widest mb-4">Built for you</span>
+          <h2 class="font-display font-bold text-3xl md:text-4xl text-white leading-tight mb-4">
+            Built for teams that move fast.
+          </h2>
+          <p class="text-rw-textMuted text-lg leading-relaxed">
+            Tech startups with employees across borders who are tired of paying a small fortune just to get payroll right.
+          </p>
+        </div>
+        <div data-animate data-animate-delay="1">
+          <div class="relative bg-rw-surface border border-rw-border rounded-2xl p-8">
+            <!-- Quote mark -->
+            <svg class="absolute -top-4 -left-2 w-10 h-10 text-rw-electric/20" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10H14.017zM0 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151C7.546 6.068 5.983 8.789 5.983 11H10v10H0z"/>
+            </svg>
+            <p class="text-white text-lg md:text-xl leading-relaxed mb-6 italic">
+              "We had providers in the Netherlands, Portugal, and the US. Three dashboards, three invoices, three points of failure. RunWave replaced all of them in one afternoon."
+            </p>
+            <div class="flex items-center gap-3">
+              <div class="w-10 h-10 rounded-full bg-gradient-to-br from-rw-electric to-rw-violet flex items-center justify-center text-white font-display font-bold text-sm">LV</div>
+              <div>
+                <div class="text-white font-display font-semibold text-sm">Lena Visser</div>
+                <div class="text-rw-textDim text-xs">Head of People at Stackfield — 52 employees, 5 countries</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ========== CTA — Inline form ========== -->
+  <section class="py-24 md:py-32 px-6 relative overflow-hidden">
+    <!-- Electric glow -->
+    <div class="absolute bottom-0 left-1/2 -translate-x-1/2 w-[500px] h-[250px] bg-rw-electric/8 rounded-full blur-[80px]"></div>
+
+    <div class="max-w-2xl mx-auto text-center relative z-10" data-animate>
+      <h2 class="font-display font-bold text-3xl md:text-5xl text-white leading-tight mb-4">
+        Stop managing vendors.<br>
+        <span class="bg-gradient-to-r from-rw-electric to-rw-neon bg-clip-text text-transparent">Start paying people.</span>
+      </h2>
+      <p class="text-rw-textMuted text-lg mb-10">
+        Set up your first payroll run in under 5 minutes.
+      </p>
+      <div class="flex flex-col sm:flex-row items-center justify-center gap-3 max-w-md mx-auto">
+        <input type="email" placeholder="your@company.com" class="w-full sm:flex-1 bg-rw-surface border border-rw-border rounded-full px-5 py-3.5 text-white text-sm placeholder-rw-textDim focus:outline-none focus:border-rw-electric transition-colors">
+        <button class="glow-btn w-full sm:w-auto bg-rw-electric text-rw-darker font-display font-semibold text-sm px-8 py-3.5 rounded-full hover:bg-white transition-all whitespace-nowrap">
+          Get early access
+        </button>
+      </div>
+      <p class="text-rw-textDim text-xs mt-4">Free for teams under 10. No credit card needed.</p>
+    </div>
+  </section>
+
+
+  <!-- ========== FOOTER ========== -->
+  <footer class="border-t border-rw-border py-10 px-6">
+    <div class="max-w-5xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
+      <div class="flex items-center gap-2">
+        <span class="inline-block w-6 h-6 rounded-md bg-gradient-to-br from-rw-electric to-rw-violet flex items-center justify-center">
+          <svg class="w-3.5 h-3.5 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+          </svg>
+        </span>
+        <span class="font-display font-bold text-white text-sm">RunWave</span>
+      </div>
+      <p class="text-rw-textDim text-sm text-center">One click. Every country. Paid.</p>
+      <p class="text-rw-textDim text-xs">&copy; 2026 RunWave &middot; Built at AI Lab</p>
+    </div>
+  </footer>
+
+
+  <!-- FlyonUI JS -->
+  <script src="https://cdn.jsdelivr.net/npm/flyonui@2.4.1/flyonui.js"></script>
+
+  <script>
+    // Immediately show above-fold elements on load
+    function showHeroElements() {
+      // Nav
+      const nav = document.querySelector('nav');
+      if (nav) nav.classList.add('animate-visible');
+
+      // All animated elements inside the hero section (first section)
+      const heroSection = document.querySelector('.hero-bg');
+      if (heroSection) {
+        const heroAnimated = heroSection.querySelectorAll('[data-animate]');
+        heroAnimated.forEach((el, i) => {
+          setTimeout(() => el.classList.add('animate-visible'), 100 + (i * 100));
+        });
+      }
+    }
+
+    // Run immediately and also after a short delay as fallback
+    showHeroElements();
+    setTimeout(showHeroElements, 200);
+
+    // Scroll-triggered animations for below-fold elements
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('animate-visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
+
+    // Only observe elements NOT in the hero
+    document.querySelectorAll('[data-animate]').forEach(el => {
+      const heroSection = document.querySelector('.hero-bg');
+      if (!heroSection || !heroSection.contains(el)) {
+        observer.observe(el);
+      }
+    });
+
+    // Counter animation for stats
+    function animateCounters() {
+      const counters = document.querySelectorAll('.count-up');
+      counters.forEach(counter => {
+        const text = counter.textContent.trim();
+        // Only animate the "80+" counter
+        if (text.includes('80')) {
+          let current = 0;
+          const target = 80;
+          const duration = 1500;
+          const start = performance.now();
+
+          function tick(now) {
+            const elapsed = now - start;
+            const progress = Math.min(elapsed / duration, 1);
+            const eased = 1 - Math.pow(1 - progress, 3);
+            current = Math.round(eased * target);
+            counter.textContent = current + '+';
+            if (progress < 1) requestAnimationFrame(tick);
+          }
+          requestAnimationFrame(tick);
+        }
+      });
+    }
+
+    // Trigger counters when hero stats become visible
+    const statsObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          animateCounters();
+          statsObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.5 });
+
+    const statsGrid = document.querySelector('.count-up')?.closest('.grid');
+    if (statsGrid) statsObserver.observe(statsGrid);
+
+    // Smooth scroll for anchor links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      });
+    });
+
+    // Nav background on scroll
+    const nav = document.querySelector('nav');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 80) {
+        nav.style.backgroundColor = 'rgba(10, 10, 15, 0.95)';
+      } else {
+        nav.style.backgroundColor = 'rgba(10, 10, 15, 0.9)';
+      }
+    });
+  </script>
+
+</body>
+</html>
