@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="dark">
+<html lang="en" data-theme="light">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>RunWave — One click. Every country. Paid.</title>
+  <title>Pulse — Your business moves fast. So should your financial partner.</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flyonui@2.4.1/flyonui.css">
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
@@ -14,801 +14,604 @@
     theme: {
       extend: {
         colors: {
-          rw: {
-            dark: '#0a0a0f',
-            darker: '#06060a',
-            surface: '#12121c',
-            surfaceLight: '#1a1a2e',
-            border: '#2a2a40',
-            electric: '#00d4ff',
-            electricDim: '#00a3c7',
-            neon: '#00ff88',
-            neonDim: '#00cc6a',
-            violet: '#7b61ff',
-            violetDim: '#5a3fd6',
-            text: '#e8e8f0',
-            textMuted: '#8888a0',
-            textDim: '#555570',
-            warning: '#ff6b4a',
+          coral: {
+            50: '#fff5f2',
+            100: '#ffe8e0',
+            200: '#ffd0c2',
+            300: '#ffab94',
+            400: '#ff7f5c',
+            500: '#ff5c35',
+            600: '#e8421d',
+            700: '#c43214',
+            800: '#a02b14',
+            900: '#842818',
+          },
+          warm: {
+            50: '#fefcfb',
+            100: '#fdf6f1',
+            200: '#fbeee4',
+            800: '#2d2019',
+            900: '#1a120d',
+          },
+          slate: {
+            950: '#141018',
           }
         },
         fontFamily: {
-          display: ['Space Grotesk', 'sans-serif'],
-          body: ['Inter', 'sans-serif'],
+          display: ['"Plus Jakarta Sans"', 'system-ui', 'sans-serif'],
+          body: ['"Plus Jakarta Sans"', 'system-ui', 'sans-serif'],
+        },
+        animation: {
+          'float': 'float 6s ease-in-out infinite',
+          'float-delayed': 'float 6s ease-in-out 2s infinite',
+          'pulse-soft': 'pulseSoft 3s ease-in-out infinite',
+          'gradient': 'gradient 8s ease infinite',
         }
       }
     }
   }
   </script>
   <style>
-    * { box-sizing: border-box; }
-    body {
-      font-family: 'Inter', sans-serif;
-      background-color: #0a0a0f;
-      color: #e8e8f0;
-      overflow-x: hidden;
+    * { font-family: 'Plus Jakarta Sans', system-ui, sans-serif; }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-12px); }
     }
 
-    /* Animated gradient orbs */
-    .hero-bg {
-      position: relative;
-      overflow: hidden;
-    }
-    .hero-bg::before {
-      content: '';
-      position: absolute;
-      top: -40%;
-      left: -20%;
-      width: 80%;
-      height: 120%;
-      background: radial-gradient(ellipse at center, rgba(0,212,255,0.12) 0%, transparent 60%);
-      animation: orbFloat 14s ease-in-out infinite alternate;
-    }
-    .hero-bg::after {
-      content: '';
-      position: absolute;
-      bottom: -30%;
-      right: -15%;
-      width: 70%;
-      height: 100%;
-      background: radial-gradient(ellipse at center, rgba(123,97,255,0.10) 0%, transparent 55%);
-      animation: orbFloat2 18s ease-in-out infinite alternate;
-    }
-    @keyframes orbFloat {
-      0% { transform: translate(0, 0) scale(1); }
-      50% { transform: translate(5%, -3%) scale(1.05); }
-      100% { transform: translate(-3%, 2%) scale(0.97); }
-    }
-    @keyframes orbFloat2 {
-      0% { transform: translate(0, 0) scale(1); }
-      50% { transform: translate(-4%, 3%) scale(1.03); }
-      100% { transform: translate(3%, -2%) scale(0.98); }
+    @keyframes pulseSoft {
+      0%, 100% { opacity: 0.4; }
+      50% { opacity: 0.7; }
     }
 
-    /* Noise grain overlay */
-    .grain::after {
-      content: '';
-      position: fixed;
-      inset: 0;
-      pointer-events: none;
-      opacity: 0.025;
-      z-index: 9999;
-      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-    }
-
-    /* Electric glow effect on hover */
-    .glow-btn {
-      position: relative;
-      transition: all 0.3s ease;
-    }
-    .glow-btn::before {
-      content: '';
-      position: absolute;
-      inset: -2px;
-      border-radius: inherit;
-      background: linear-gradient(135deg, #00d4ff, #7b61ff, #00ff88);
-      z-index: -1;
-      opacity: 0;
-      filter: blur(12px);
-      transition: opacity 0.3s ease;
-    }
-    .glow-btn:hover::before {
-      opacity: 0.6;
+    @keyframes gradient {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
     }
 
     /* Scroll animations */
     [data-animate] {
       opacity: 0;
-      transform: translateY(28px);
+      transform: translateY(30px);
       transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
     }
     [data-animate].animate-visible {
       opacity: 1;
       transform: translateY(0);
     }
-    [data-animate-delay="1"] { transition-delay: 0.1s; }
-    [data-animate-delay="2"] { transition-delay: 0.2s; }
-    [data-animate-delay="3"] { transition-delay: 0.3s; }
-    [data-animate-delay="4"] { transition-delay: 0.4s; }
+    [data-animate-left] {
+      opacity: 0;
+      transform: translateX(-40px);
+      transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    [data-animate-left].animate-visible {
+      opacity: 1;
+      transform: translateX(0);
+    }
+    [data-animate-right] {
+      opacity: 0;
+      transform: translateX(40px);
+      transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    [data-animate-right].animate-visible {
+      opacity: 1;
+      transform: translateX(0);
+    }
+    [data-animate-scale] {
+      opacity: 0;
+      transform: scale(0.95);
+      transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    [data-animate-scale].animate-visible {
+      opacity: 1;
+      transform: scale(1);
+    }
 
-    /* Pulsing dot for "live" indicators */
-    @keyframes pulse-dot {
-      0%, 100% { opacity: 1; transform: scale(1); }
-      50% { opacity: 0.5; transform: scale(1.5); }
+    /* Stagger children */
+    [data-stagger] > * {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1), transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
     }
-    .pulse-dot {
-      animation: pulse-dot 2s ease-in-out infinite;
-    }
+    [data-stagger].animate-visible > *:nth-child(1) { transition-delay: 0ms; opacity: 1; transform: translateY(0); }
+    [data-stagger].animate-visible > *:nth-child(2) { transition-delay: 120ms; opacity: 1; transform: translateY(0); }
+    [data-stagger].animate-visible > *:nth-child(3) { transition-delay: 240ms; opacity: 1; transform: translateY(0); }
+    [data-stagger].animate-visible > *:nth-child(4) { transition-delay: 360ms; opacity: 1; transform: translateY(0); }
 
-    /* Horizontal scrolling ticker */
-    @keyframes ticker {
-      0% { transform: translateX(0); }
-      100% { transform: translateX(-50%); }
-    }
-    .ticker-track {
-      animation: ticker 30s linear infinite;
-    }
-
-    /* Electric border animation */
-    @keyframes borderPulse {
-      0%, 100% { border-color: rgba(0,212,255,0.2); }
-      50% { border-color: rgba(0,212,255,0.5); }
-    }
-
-    /* Number counter animation */
-    .count-up {
-      font-variant-numeric: tabular-nums;
+    /* Nav scroll effect */
+    .nav-scrolled {
+      background: rgba(255, 255, 255, 0.95) !important;
+      backdrop-filter: blur(20px);
+      box-shadow: 0 1px 20px rgba(0, 0, 0, 0.06);
     }
 
     /* Smooth scroll */
-    html {
-      scroll-behavior: smooth;
+    html { scroll-behavior: smooth; }
+
+    /* Warm gradient blob backgrounds */
+    .warm-blob-1 {
+      background: radial-gradient(ellipse at 30% 20%, rgba(255, 92, 53, 0.08) 0%, transparent 60%),
+                  radial-gradient(ellipse at 70% 70%, rgba(255, 171, 148, 0.1) 0%, transparent 50%);
+    }
+    .warm-blob-2 {
+      background: radial-gradient(ellipse at 80% 30%, rgba(255, 127, 92, 0.06) 0%, transparent 50%),
+                  radial-gradient(ellipse at 20% 80%, rgba(255, 208, 194, 0.1) 0%, transparent 60%);
     }
 
-    /* Nav backdrop */
-    .nav-glass {
-      backdrop-filter: blur(20px) saturate(1.5);
-      -webkit-backdrop-filter: blur(20px) saturate(1.5);
+    /* Phone mockup custom styling */
+    .phone-glow {
+      filter: drop-shadow(0 20px 60px rgba(255, 92, 53, 0.15));
+    }
+    .mockup-phone .mockup-phone-display {
+      overflow: hidden;
+    }
+
+    /* Custom button hover */
+    .btn-coral {
+      background: linear-gradient(135deg, #ff5c35, #ff7f5c);
+      border: none;
+      color: white;
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .btn-coral:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 40px rgba(255, 92, 53, 0.3);
+      background: linear-gradient(135deg, #e8421d, #ff5c35);
+    }
+
+    /* Danger section dark */
+    .danger-bg {
+      background: linear-gradient(135deg, #1a120d 0%, #2d2019 50%, #1a120d 100%);
     }
 
     /* Step connector line */
     .step-line {
-      background: linear-gradient(to bottom, #00d4ff, #7b61ff);
-    }
-
-    /* Dashboard mockup styling */
-    .dashboard-row {
-      transition: background-color 0.2s ease;
-    }
-    .dashboard-row:hover {
-      background-color: rgba(0,212,255,0.05);
+      background: linear-gradient(180deg, #ff5c35, #ffab94, #ffd0c2);
     }
   </style>
 </head>
-<body class="grain">
+<body class="bg-warm-50 text-warm-900 overflow-x-hidden">
 
-  <!-- ========== FIXED NAVBAR ========== -->
-  <nav class="fixed top-0 left-0 right-0 z-50 nav-glass bg-rw-dark/90 border-b border-rw-border px-6 py-3.5" data-animate>
-    <div class="max-w-5xl mx-auto flex items-center justify-between">
-      <a href="#" class="font-display font-bold text-base md:text-lg text-white tracking-tight flex items-center gap-2">
-        <span class="inline-flex w-7 h-7 rounded-lg bg-gradient-to-br from-rw-electric to-rw-violet items-center justify-center">
-          <svg class="w-4 h-4 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+  <!-- ============================================ -->
+  <!-- NAV -->
+  <!-- ============================================ -->
+  <nav id="mainNav" class="fixed top-0 left-0 right-0 z-50 transition-all duration-500">
+    <div class="max-w-7xl mx-auto px-6 py-5 flex items-center justify-between">
+      <a href="#" class="flex items-center gap-2.5">
+        <!-- Pulse logo mark -->
+        <div class="w-9 h-9 rounded-xl bg-gradient-to-br from-coral-500 to-coral-400 flex items-center justify-center">
+          <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M3.5 12h3l2.5-7 4 14 3-7h4"/>
           </svg>
-        </span>
-        RunWave
+        </div>
+        <span class="text-xl font-bold tracking-tight text-warm-900">Pulse</span>
       </a>
-      <div class="flex items-center gap-6">
-        <a href="#why" class="hidden md:inline text-rw-textMuted hover:text-white transition-colors text-sm">Why we exist</a>
-        <a href="#how" class="hidden md:inline text-rw-textMuted hover:text-white transition-colors text-sm">How it works</a>
-        <a href="#how" class="bg-rw-electric text-rw-darker font-display font-semibold text-sm px-5 py-2 rounded-full hover:bg-white transition-colors">See how it works</a>
+      <div class="flex items-center gap-8">
+        <a href="#why" class="hidden md:inline-block text-sm font-medium text-warm-900/60 hover:text-coral-500 transition-colors">Why we exist</a>
+        <a href="#how" class="btn btn-coral rounded-full px-6 py-2.5 text-sm font-semibold">See how we work</a>
       </div>
     </div>
   </nav>
 
+  <!-- ============================================ -->
+  <!-- HERO — Split screen: text left, phone right -->
+  <!-- ============================================ -->
+  <section class="min-h-screen flex items-center relative warm-blob-1 pt-24 pb-16 lg:pt-0 lg:pb-0">
+    <!-- Floating decorative circles -->
+    <div class="absolute top-32 right-1/4 w-64 h-64 rounded-full bg-coral-200/20 blur-3xl animate-pulse-soft pointer-events-none"></div>
+    <div class="absolute bottom-20 left-10 w-40 h-40 rounded-full bg-coral-100/30 blur-2xl animate-pulse-soft pointer-events-none" style="animation-delay: 1.5s;"></div>
 
-  <!-- ========== HERO — Stats-Led + Centered Statement ========== -->
-  <section class="hero-bg min-h-screen flex flex-col justify-center items-center text-center px-6 pt-24 pb-16 relative">
-    <div class="relative z-10 max-w-4xl mx-auto">
-
-      <!-- Live badge -->
-      <div class="inline-flex items-center gap-2 bg-rw-surface/60 border border-rw-border rounded-full px-4 py-1.5 mb-8" data-animate>
-        <span class="w-2 h-2 rounded-full bg-rw-neon pulse-dot"></span>
-        <span class="text-xs font-medium text-rw-textMuted uppercase tracking-widest">Live in 80+ countries</span>
-      </div>
-
-      <!-- Headline -->
-      <h1 class="font-display font-bold text-5xl sm:text-6xl md:text-7xl lg:text-8xl leading-[0.95] tracking-tight mb-6" data-animate data-animate-delay="1">
-        <span class="text-white">One click.</span><br>
-        <span class="bg-gradient-to-r from-rw-electric via-rw-violet to-rw-neon bg-clip-text text-transparent">Every country.</span><br>
-        <span class="text-white">Paid.</span>
-      </h1>
-
-      <!-- Sub-headline -->
-      <p class="text-rw-textMuted text-lg md:text-xl max-w-2xl mx-auto mb-10 leading-relaxed" data-animate data-animate-delay="2">
-        One AI engine runs payroll in every country on earth — no local partners, no tax consultants, no humans slowing you down.
-      </p>
-
-      <!-- CTA -->
-      <div class="flex flex-col sm:flex-row items-center justify-center gap-4" data-animate data-animate-delay="3">
-        <a href="#how" class="glow-btn bg-rw-electric text-rw-darker font-display font-semibold text-base px-8 py-3.5 rounded-full hover:bg-white transition-all">
-          See how it works
-        </a>
-        <a href="#why" class="text-rw-textMuted hover:text-white transition-colors text-sm font-medium flex items-center gap-2">
-          Why we exist
-          <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
-        </a>
-      </div>
-
-      <!-- Stats bar -->
-      <div class="mt-16 grid grid-cols-3 gap-4 max-w-xl mx-auto" data-animate data-animate-delay="4">
-        <div class="text-center">
-          <div class="font-display font-bold text-2xl md:text-3xl text-white count-up" data-count="80">80+</div>
-          <div class="text-xs text-rw-textDim mt-1 uppercase tracking-wider">Countries</div>
-        </div>
-        <div class="text-center border-x border-rw-border">
-          <div class="font-display font-bold text-2xl md:text-3xl text-white count-up">14<span class="text-rw-electric">s</span></div>
-          <div class="text-xs text-rw-textDim mt-1 uppercase tracking-wider">Avg. calculation</div>
-        </div>
-        <div class="text-center">
-          <div class="font-display font-bold text-2xl md:text-3xl text-white count-up">0</div>
-          <div class="text-xs text-rw-textDim mt-1 uppercase tracking-wider">Local partners</div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Scroll indicator -->
-    <div class="absolute bottom-8 left-1/2 -translate-x-1/2 z-10 flex flex-col items-center gap-2 opacity-40">
-      <div class="w-5 h-8 border-2 border-rw-textDim rounded-full flex items-start justify-center p-1">
-        <div class="w-1 h-2 bg-rw-textMuted rounded-full animate-bounce"></div>
-      </div>
-    </div>
-  </section>
-
-
-  <!-- ========== TICKER — Country names scrolling ========== -->
-  <div class="border-y border-rw-border bg-rw-darker py-3 overflow-hidden">
-    <div class="ticker-track flex items-center gap-8 whitespace-nowrap" style="width: max-content;">
-      <span class="text-xs text-rw-textDim uppercase tracking-[0.25em] flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-rw-neon"></span>Netherlands</span>
-      <span class="text-xs text-rw-textDim uppercase tracking-[0.25em] flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-rw-electric"></span>Germany</span>
-      <span class="text-xs text-rw-textDim uppercase tracking-[0.25em] flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-rw-violet"></span>Brazil</span>
-      <span class="text-xs text-rw-textDim uppercase tracking-[0.25em] flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-rw-neon"></span>United States</span>
-      <span class="text-xs text-rw-textDim uppercase tracking-[0.25em] flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-rw-electric"></span>Singapore</span>
-      <span class="text-xs text-rw-textDim uppercase tracking-[0.25em] flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-rw-violet"></span>Japan</span>
-      <span class="text-xs text-rw-textDim uppercase tracking-[0.25em] flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-rw-neon"></span>United Kingdom</span>
-      <span class="text-xs text-rw-textDim uppercase tracking-[0.25em] flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-rw-electric"></span>France</span>
-      <span class="text-xs text-rw-textDim uppercase tracking-[0.25em] flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-rw-violet"></span>India</span>
-      <span class="text-xs text-rw-textDim uppercase tracking-[0.25em] flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-rw-neon"></span>Australia</span>
-      <span class="text-xs text-rw-textDim uppercase tracking-[0.25em] flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-rw-electric"></span>Portugal</span>
-      <span class="text-xs text-rw-textDim uppercase tracking-[0.25em] flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-rw-violet"></span>Spain</span>
-      <!-- Duplicate for seamless loop -->
-      <span class="text-xs text-rw-textDim uppercase tracking-[0.25em] flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-rw-neon"></span>Netherlands</span>
-      <span class="text-xs text-rw-textDim uppercase tracking-[0.25em] flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-rw-electric"></span>Germany</span>
-      <span class="text-xs text-rw-textDim uppercase tracking-[0.25em] flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-rw-violet"></span>Brazil</span>
-      <span class="text-xs text-rw-textDim uppercase tracking-[0.25em] flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-rw-neon"></span>United States</span>
-      <span class="text-xs text-rw-textDim uppercase tracking-[0.25em] flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-rw-electric"></span>Singapore</span>
-      <span class="text-xs text-rw-textDim uppercase tracking-[0.25em] flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-rw-violet"></span>Japan</span>
-      <span class="text-xs text-rw-textDim uppercase tracking-[0.25em] flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-rw-neon"></span>United Kingdom</span>
-      <span class="text-xs text-rw-textDim uppercase tracking-[0.25em] flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-rw-electric"></span>France</span>
-      <span class="text-xs text-rw-textDim uppercase tracking-[0.25em] flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-rw-violet"></span>India</span>
-      <span class="text-xs text-rw-textDim uppercase tracking-[0.25em] flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-rw-neon"></span>Australia</span>
-      <span class="text-xs text-rw-textDim uppercase tracking-[0.25em] flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-rw-electric"></span>Portugal</span>
-      <span class="text-xs text-rw-textDim uppercase tracking-[0.25em] flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-rw-violet"></span>Spain</span>
-    </div>
-  </div>
-
-
-  <!-- ========== PROBLEM — The industry is broken ========== -->
-  <section id="why" class="py-24 md:py-32 px-6 relative">
-    <div class="max-w-4xl mx-auto">
-
-      <!-- Provocative opener -->
-      <div class="mb-16" data-animate>
-        <span class="inline-block text-rw-warning font-display font-semibold text-sm uppercase tracking-widest mb-4">The ugly truth</span>
-        <h2 class="font-display font-bold text-3xl md:text-5xl text-white leading-tight">
-          Global payroll is a mess.
-        </h2>
-      </div>
-
-      <!-- Split layout: pain on left, visual on right -->
-      <div class="grid md:grid-cols-5 gap-12 items-start">
-        <div class="md:col-span-3" data-animate data-animate-delay="1">
-          <p class="text-rw-textMuted text-lg md:text-xl leading-relaxed mb-8">
-            You're paying three providers, a tax consultant, and a compliance advisor just to get salaries out in five countries. Every new country means another partner, another contract, another invoice per employee per month.
-          </p>
-          <p class="text-rw-textMuted text-lg md:text-xl leading-relaxed">
-            You spend more time managing your payroll vendors than actually managing your team.
-          </p>
-        </div>
-
-        <!-- Visual: stacked "invoices" -->
-        <div class="md:col-span-2 relative" data-animate data-animate-delay="2">
-          <div class="space-y-3">
-            <div class="bg-rw-surface border border-rw-border rounded-lg p-4 transform rotate-1">
-              <div class="flex justify-between items-center mb-2">
-                <span class="text-xs text-rw-textDim uppercase tracking-wider">Invoice #4821</span>
-                <span class="text-xs text-rw-warning font-semibold">OVERDUE</span>
-              </div>
-              <div class="text-sm text-rw-textMuted">PayrollCo Germany GmbH</div>
-              <div class="font-display font-bold text-white mt-1">EUR 3,240.00</div>
-            </div>
-            <div class="bg-rw-surface border border-rw-border rounded-lg p-4 transform -rotate-1">
-              <div class="flex justify-between items-center mb-2">
-                <span class="text-xs text-rw-textDim uppercase tracking-wider">Invoice #1199</span>
-                <span class="text-xs text-rw-textDim font-semibold">PENDING</span>
-              </div>
-              <div class="text-sm text-rw-textMuted">SGPay Asia Pte Ltd</div>
-              <div class="font-display font-bold text-white mt-1">SGD 5,880.00</div>
-            </div>
-            <div class="bg-rw-surface border border-rw-border rounded-lg p-4 transform rotate-0.5">
-              <div class="flex justify-between items-center mb-2">
-                <span class="text-xs text-rw-textDim uppercase tracking-wider">Invoice #0773</span>
-                <span class="text-xs text-rw-textDim font-semibold">PENDING</span>
-              </div>
-              <div class="text-sm text-rw-textMuted">Brasil Folha Servicos</div>
-              <div class="font-display font-bold text-white mt-1">BRL 12,450.00</div>
-            </div>
-            <div class="bg-rw-surface border border-rw-border rounded-lg p-4 opacity-50 transform -rotate-0.5">
-              <div class="flex justify-between items-center mb-2">
-                <span class="text-xs text-rw-textDim uppercase tracking-wider">Invoice #0291</span>
-                <span class="text-xs text-rw-textDim font-semibold">PENDING</span>
-              </div>
-              <div class="text-sm text-rw-textMuted">US PayPartners LLC</div>
-              <div class="font-display font-bold text-white mt-1">USD 7,120.00</div>
-            </div>
+    <div class="max-w-7xl mx-auto px-6 w-full">
+      <div class="grid lg:grid-cols-2 gap-12 lg:gap-8 items-center">
+        <!-- Text -->
+        <div data-animate class="max-w-xl">
+          <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-coral-100/60 text-coral-600 text-sm font-semibold mb-8">
+            <span class="w-2 h-2 rounded-full bg-coral-500 animate-pulse"></span>
+            Now live in the Netherlands
           </div>
-          <!-- Red total -->
-          <div class="absolute -bottom-6 -right-2 bg-rw-warning/10 border border-rw-warning/30 rounded-lg px-4 py-2">
-            <span class="text-rw-warning font-display font-bold text-sm">4 vendors. 4 invoices. Every month.</span>
+          <h1 class="text-4xl md:text-5xl lg:text-[3.4rem] font-extrabold leading-[1.1] tracking-tight text-warm-900 mb-6">
+            Your business moves fast.<br>
+            <span class="text-transparent bg-clip-text bg-gradient-to-r from-coral-500 to-coral-400">So should your financial partner.</span>
+          </h1>
+          <p class="text-lg md:text-xl text-warm-900/60 leading-relaxed mb-10 max-w-md">
+            AI-powered lending and proactive financial advice for scaling businesses. Credit decisions in minutes, not months.
+          </p>
+          <a href="#how" class="btn btn-coral rounded-full px-8 py-3.5 text-base font-bold inline-flex items-center gap-2">
+            See how we work
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/>
+            </svg>
+          </a>
+        </div>
+
+        <!-- Phone mockup -->
+        <div data-animate-right class="flex justify-center lg:justify-end">
+          <div class="relative phone-glow animate-float">
+            <!-- Custom phone frame -->
+            <div class="relative w-[280px] h-[580px] bg-warm-900 rounded-[3rem] p-[10px] shadow-2xl">
+              <!-- Notch -->
+              <div class="absolute top-0 left-1/2 -translate-x-1/2 w-28 h-6 bg-warm-900 rounded-b-2xl z-10"></div>
+              <!-- Screen -->
+              <div class="w-full h-full rounded-[2.3rem] overflow-hidden bg-white">
+                <!-- Status bar -->
+                <div class="bg-gradient-to-r from-coral-500 to-coral-400 px-5 pt-8 pb-14">
+                  <div class="flex justify-between items-center text-white/80 text-xs mb-3">
+                    <span class="font-semibold">9:41</span>
+                    <div class="flex gap-1.5">
+                      <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 24 24"><path d="M12 3a9 9 0 019 9h-3a6 6 0 00-6-6V3z"/><path d="M12 9a3 3 0 013 3h-3V9z"/></svg>
+                      <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="10" rx="2"/><rect x="4" y="9" width="12" height="6" rx="1"/></svg>
+                    </div>
+                  </div>
+                  <p class="text-white/70 text-[10px]">Good morning, Sanne</p>
+                  <p class="text-white text-base font-bold mt-0.5">Your Pulse Score</p>
+                </div>
+                <!-- Score card overlapping -->
+                <div class="px-3 -mt-8">
+                  <div class="bg-white rounded-xl shadow-lg p-3.5 border border-gray-100">
+                    <div class="flex items-center justify-between mb-2">
+                      <div class="flex items-center gap-2">
+                        <div class="w-10 h-10 rounded-full bg-gradient-to-br from-coral-400 to-coral-500 flex items-center justify-center">
+                          <span class="text-white text-sm font-extrabold">87</span>
+                        </div>
+                        <div>
+                          <p class="text-xs font-bold text-warm-900">Excellent</p>
+                          <p class="text-[10px] text-warm-900/50">Growth trajectory</p>
+                        </div>
+                      </div>
+                      <div class="text-right">
+                        <p class="text-[10px] text-emerald-500 font-semibold">+12%</p>
+                        <p class="text-[10px] text-warm-900/40">vs. last month</p>
+                      </div>
+                    </div>
+                    <!-- Mini chart bars -->
+                    <div class="flex items-end gap-1 h-8 mt-1">
+                      <div class="flex-1 bg-coral-100 rounded-sm" style="height:40%"></div>
+                      <div class="flex-1 bg-coral-100 rounded-sm" style="height:55%"></div>
+                      <div class="flex-1 bg-coral-200 rounded-sm" style="height:45%"></div>
+                      <div class="flex-1 bg-coral-200 rounded-sm" style="height:65%"></div>
+                      <div class="flex-1 bg-coral-300 rounded-sm" style="height:60%"></div>
+                      <div class="flex-1 bg-coral-300 rounded-sm" style="height:75%"></div>
+                      <div class="flex-1 bg-coral-400 rounded-sm" style="height:70%"></div>
+                      <div class="flex-1 bg-coral-400 rounded-sm" style="height:85%"></div>
+                      <div class="flex-1 bg-coral-500 rounded-sm" style="height:80%"></div>
+                      <div class="flex-1 bg-coral-500 rounded-t-md" style="height:100%"></div>
+                    </div>
+                    <p class="text-[10px] text-warm-900/40 mt-1.5">Credit line: <span class="text-warm-900 font-semibold">€250,000</span> approved</p>
+                  </div>
+                </div>
+                <!-- Notification card -->
+                <div class="px-3 mt-2.5">
+                  <div class="bg-coral-50 rounded-lg p-3 border border-coral-100">
+                    <div class="flex gap-2">
+                      <div class="w-6 h-6 rounded-full bg-coral-500 flex items-center justify-center flex-shrink-0 mt-0.5">
+                        <svg class="w-3 h-3 text-white" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                          <path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+                        </svg>
+                      </div>
+                      <div>
+                        <p class="text-[11px] font-bold text-warm-900">Opportunity spotted</p>
+                        <p class="text-[10px] text-warm-900/50 mt-0.5 leading-tight">Now could be the right time to expand capacity.</p>
+                        <p class="text-[10px] font-semibold text-coral-500 mt-1">Tap to review &rarr;</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!-- Quick actions -->
+                <div class="px-3 mt-2.5 pb-4">
+                  <div class="flex gap-2">
+                    <div class="flex-1 bg-warm-100 rounded-lg p-2 text-center">
+                      <svg class="w-4 h-4 text-coral-500 mx-auto mb-0.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                      </svg>
+                      <p class="text-[10px] font-semibold text-warm-900">Funding</p>
+                    </div>
+                    <div class="flex-1 bg-warm-100 rounded-lg p-2 text-center">
+                      <svg class="w-4 h-4 text-coral-500 mx-auto mb-0.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
+                      </svg>
+                      <p class="text-[10px] font-semibold text-warm-900">Insights</p>
+                    </div>
+                    <div class="flex-1 bg-warm-100 rounded-lg p-2 text-center">
+                      <svg class="w-4 h-4 text-coral-500 mx-auto mb-0.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/>
+                      </svg>
+                      <p class="text-[10px] font-semibold text-warm-900">Advisor</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- Home indicator -->
+              <div class="absolute bottom-2 left-1/2 -translate-x-1/2 w-24 h-1 bg-warm-600 rounded-full"></div>
+            </div>
+            <!-- Decorative floating elements -->
+            <div class="absolute -top-4 -left-8 w-20 h-20 rounded-2xl bg-coral-100/40 blur-xl animate-float-delayed"></div>
+            <div class="absolute -bottom-6 -right-6 w-16 h-16 rounded-full bg-coral-200/40 blur-lg animate-float"></div>
           </div>
         </div>
       </div>
     </div>
   </section>
 
+  <!-- ============================================ -->
+  <!-- PROBLEM — "Lending is stuck in the past" -->
+  <!-- ============================================ -->
+  <section id="why" class="py-24 md:py-32 relative warm-blob-2">
+    <div class="max-w-7xl mx-auto px-6">
+      <div class="grid lg:grid-cols-2 gap-16 items-center">
+        <!-- Image -->
+        <div data-animate-left class="relative order-2 lg:order-1">
+          <div class="rounded-3xl overflow-hidden shadow-xl">
+            <img
+              src="https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=700&q=80"
+              alt="Frustrating paperwork and waiting"
+              class="w-full h-80 md:h-96 object-cover"
+            >
+          </div>
+          <!-- Overlay stat card -->
+          <div class="absolute -bottom-6 right-2 md:right-8 bg-white rounded-2xl shadow-lg px-6 py-4 border border-gray-100" data-animate-scale>
+            <p class="text-3xl font-extrabold text-coral-500">6 weeks</p>
+            <p class="text-sm text-warm-900/50">Average time to get a credit decision</p>
+          </div>
+        </div>
+        <!-- Text -->
+        <div data-animate class="order-1 lg:order-2">
+          <span class="text-coral-500 text-sm font-bold uppercase tracking-widest">The problem</span>
+          <h2 class="text-3xl md:text-4xl font-extrabold text-warm-900 mt-4 mb-6 leading-tight">
+            Lending is stuck in the past
+          </h2>
+          <div class="space-y-5 text-warm-900/60 text-lg leading-relaxed">
+            <p>
+              Traditional lenders make credit decisions based on last year's numbers. They ask for stacks of financial statements, run them through committees, and get back to you in weeks — if you're lucky.
+            </p>
+            <p>
+              Meanwhile, your business has already moved on. You need capital when the opportunity is there, not when your lender finally finishes reviewing your annual report.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
 
-  <!-- ========== SOLUTION — One engine. Every country. ========== -->
-  <section class="py-24 md:py-32 px-6 bg-rw-darker relative overflow-hidden">
-    <!-- Subtle grid background -->
-    <div class="absolute inset-0 opacity-[0.03]" style="background-image: radial-gradient(circle, #00d4ff 1px, transparent 1px); background-size: 32px 32px;"></div>
+  <!-- ============================================ -->
+  <!-- SOLUTION — "Built for what's next" -->
+  <!-- ============================================ -->
+  <section class="py-24 md:py-32 bg-white relative overflow-hidden">
+    <!-- Subtle warm gradient -->
+    <div class="absolute top-0 right-0 w-1/2 h-full bg-gradient-to-l from-coral-50/50 to-transparent pointer-events-none"></div>
 
-    <div class="max-w-5xl mx-auto relative z-10">
+    <div class="max-w-7xl mx-auto px-6 relative">
       <div class="text-center mb-20" data-animate>
-        <span class="inline-block text-rw-electric font-display font-semibold text-sm uppercase tracking-widest mb-4">The RunWave way</span>
-        <h2 class="font-display font-bold text-3xl md:text-5xl text-white leading-tight">
-          One engine. Every country.
-        </h2>
+        <span class="text-coral-500 text-sm font-bold uppercase tracking-widest">Our approach</span>
+        <h2 class="text-3xl md:text-4xl font-extrabold text-warm-900 mt-4">Built for what's next</h2>
       </div>
 
-      <!-- Three features as alternating rows, not cards -->
-      <div class="space-y-20">
-
-        <!-- Feature 1 -->
-        <div class="grid md:grid-cols-2 gap-10 items-center" data-animate>
-          <div>
-            <div class="w-12 h-12 rounded-xl bg-rw-electric/10 border border-rw-electric/20 flex items-center justify-center mb-5">
-              <svg class="w-6 h-6 text-rw-electric" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z"/>
-              </svg>
-            </div>
-            <h3 class="font-display font-bold text-xl md:text-2xl text-white mb-3">Real-time compliance</h3>
-            <p class="text-rw-textMuted text-base md:text-lg leading-relaxed">
-              RunWave reads every country's tax rules, labor laws, and filing deadlines as they change. Not quarterly updates. Live.
-            </p>
-          </div>
-          <div class="bg-rw-surface border border-rw-border rounded-2xl p-6 font-mono text-sm">
-            <div class="flex items-center gap-2 mb-4">
-              <span class="w-2 h-2 rounded-full bg-rw-neon pulse-dot"></span>
-              <span class="text-rw-neon text-xs uppercase tracking-wider">Live feed</span>
-            </div>
-            <div class="space-y-2 text-rw-textDim">
-              <div class="flex items-center gap-3">
-                <span class="text-rw-textDim text-xs">12:04</span>
-                <span class="text-rw-electric">DE</span>
-                <span>Sozialversicherung rate updated: 18.6% <span class="text-rw-neon">applied</span></span>
-              </div>
-              <div class="flex items-center gap-3">
-                <span class="text-rw-textDim text-xs">12:03</span>
-                <span class="text-rw-violet">BR</span>
-                <span>INSS threshold changed for 2026 <span class="text-rw-neon">applied</span></span>
-              </div>
-              <div class="flex items-center gap-3">
-                <span class="text-rw-textDim text-xs">11:58</span>
-                <span class="text-rw-electric">NL</span>
-                <span>30% ruling eligibility rule updated <span class="text-rw-neon">applied</span></span>
-              </div>
-              <div class="flex items-center gap-3">
-                <span class="text-rw-textDim text-xs">11:52</span>
-                <span class="text-rw-violet">US</span>
-                <span>CA state tax bracket adjustment <span class="text-rw-neon">applied</span></span>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Feature 2 -->
-        <div class="grid md:grid-cols-2 gap-10 items-center" data-animate>
-          <div class="md:order-2">
-            <div class="w-12 h-12 rounded-xl bg-rw-violet/10 border border-rw-violet/20 flex items-center justify-center mb-5">
-              <svg class="w-6 h-6 text-rw-violet" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9"/>
-              </svg>
-            </div>
-            <h3 class="font-display font-bold text-xl md:text-2xl text-white mb-3">Zero local partners</h3>
-            <p class="text-rw-textMuted text-base md:text-lg leading-relaxed">
-              No middlemen in S&atilde;o Paulo, no agencies in Berlin, no consultants in Singapore. The AI handles it all, directly.
-            </p>
-          </div>
-          <div class="md:order-1 relative">
-            <div class="bg-rw-surface border border-rw-border rounded-2xl p-6">
-              <div class="text-center mb-4">
-                <span class="text-xs text-rw-textDim uppercase tracking-wider">Traditional setup</span>
-              </div>
-              <div class="space-y-2">
-                <div class="flex items-center justify-between bg-rw-dark/50 rounded-lg px-4 py-2.5">
-                  <span class="text-sm text-rw-textMuted">Netherlands</span>
-                  <span class="text-xs text-rw-warning line-through">Local provider</span>
-                </div>
-                <div class="flex items-center justify-between bg-rw-dark/50 rounded-lg px-4 py-2.5">
-                  <span class="text-sm text-rw-textMuted">Germany</span>
-                  <span class="text-xs text-rw-warning line-through">Local provider</span>
-                </div>
-                <div class="flex items-center justify-between bg-rw-dark/50 rounded-lg px-4 py-2.5">
-                  <span class="text-sm text-rw-textMuted">Brazil</span>
-                  <span class="text-xs text-rw-warning line-through">Local provider</span>
-                </div>
-                <div class="flex items-center justify-between bg-rw-dark/50 rounded-lg px-4 py-2.5">
-                  <span class="text-sm text-rw-textMuted">Singapore</span>
-                  <span class="text-xs text-rw-warning line-through">Local provider</span>
-                </div>
-              </div>
-              <div class="mt-4 pt-4 border-t border-rw-border text-center">
-                <span class="font-display font-bold text-rw-electric text-sm">RunWave: 1 engine covers all</span>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Feature 3 -->
-        <div class="grid md:grid-cols-2 gap-10 items-center" data-animate>
-          <div>
-            <div class="w-12 h-12 rounded-xl bg-rw-neon/10 border border-rw-neon/20 flex items-center justify-center mb-5">
-              <svg class="w-6 h-6 text-rw-neon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
-              </svg>
-            </div>
-            <h3 class="font-display font-bold text-xl md:text-2xl text-white mb-3">One flat price</h3>
-            <p class="text-rw-textMuted text-base md:text-lg leading-relaxed">
-              Pay per employee. Not per employee per country. Your costs drop the moment you connect.
-            </p>
-          </div>
-          <div class="bg-rw-surface border border-rw-border rounded-2xl p-6">
-            <div class="flex items-center justify-between mb-6">
-              <span class="text-xs text-rw-textDim uppercase tracking-wider">Pricing comparison</span>
-            </div>
-            <div class="space-y-4">
-              <div>
-                <div class="flex justify-between text-sm mb-1.5">
-                  <span class="text-rw-textMuted">Traditional (5 countries)</span>
-                  <span class="text-rw-warning font-display font-bold">~$85 /emp /mo</span>
-                </div>
-                <div class="w-full h-2 bg-rw-dark rounded-full overflow-hidden">
-                  <div class="h-full bg-gradient-to-r from-rw-warning/60 to-rw-warning rounded-full" style="width: 85%"></div>
-                </div>
-              </div>
-              <div>
-                <div class="flex justify-between text-sm mb-1.5">
-                  <span class="text-rw-textMuted">RunWave (any country)</span>
-                  <span class="text-rw-neon font-display font-bold">$29 /emp /mo</span>
-                </div>
-                <div class="w-full h-2 bg-rw-dark rounded-full overflow-hidden">
-                  <div class="h-full bg-gradient-to-r from-rw-neon/60 to-rw-neon rounded-full" style="width: 29%"></div>
-                </div>
-              </div>
-            </div>
-            <div class="mt-5 pt-4 border-t border-rw-border">
-              <span class="text-rw-neon font-display font-semibold text-sm">Save 66% on average</span>
-            </div>
-          </div>
-        </div>
-
-      </div>
-    </div>
-  </section>
-
-
-  <!-- ========== HOW IT WORKS — Dashboard Showcase ========== -->
-  <section id="how" class="py-24 md:py-32 px-6">
-    <div class="max-w-6xl mx-auto">
-
-      <div class="text-center mb-8" data-animate>
-        <span class="inline-block text-rw-electric font-display font-semibold text-sm uppercase tracking-widest mb-4">How it works</span>
-        <h2 class="font-display font-bold text-3xl md:text-5xl text-white leading-tight mb-4">
-          Three steps. Zero friction.
-        </h2>
-        <p class="text-rw-textMuted text-lg max-w-2xl mx-auto">From upload to paid in minutes, not weeks.</p>
-      </div>
-
-      <!-- Steps as three clean cards -->
-      <div class="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto mb-20">
-
-        <!-- Step 1 -->
-        <div class="bg-rw-surface border border-rw-border rounded-2xl p-8 relative" data-animate>
-          <div class="w-10 h-10 rounded-full bg-rw-electric/10 flex items-center justify-center font-display font-bold text-rw-electric text-sm mb-5">
-            1
-          </div>
-          <h3 class="font-display font-bold text-lg md:text-xl text-white mb-3">Connect your team</h3>
-          <p class="text-rw-textMuted text-base leading-relaxed">
-            Upload your employee list or sync from your HR tool. RunWave detects every country, contract type, and tax situation automatically.
-          </p>
-        </div>
-
-        <!-- Step 2 -->
-        <div class="bg-rw-surface border border-rw-border rounded-2xl p-8 relative" data-animate data-animate-delay="1">
-          <div class="w-10 h-10 rounded-full bg-rw-violet/10 flex items-center justify-center font-display font-bold text-rw-violet text-sm mb-5">
-            2
-          </div>
-          <h3 class="font-display font-bold text-lg md:text-xl text-white mb-3">RunWave calculates everything</h3>
-          <p class="text-rw-textMuted text-base leading-relaxed">
-            Gross-to-net, local taxes, social contributions, pension, benefits — computed in seconds for every employee in every jurisdiction.
-          </p>
-        </div>
-
-        <!-- Step 3 -->
-        <div class="bg-rw-surface border border-rw-border rounded-2xl p-8 relative" data-animate data-animate-delay="2">
-          <div class="w-10 h-10 rounded-full bg-rw-neon/10 flex items-center justify-center font-display font-bold text-rw-neon text-sm mb-5">
-            3
-          </div>
-          <h3 class="font-display font-bold text-lg md:text-xl text-white mb-3">Payroll goes out. Done.</h3>
-          <p class="text-rw-textMuted text-base leading-relaxed">
-            Salaries land on time, payslips are generated, tax filings are submitted. You didn't lift a finger.
-          </p>
-        </div>
-
-      </div>
-
-      <!-- Browser mockup with dashboard -->
-      <div data-animate>
-        <div class="mockup-browser border border-rw-border bg-rw-surface shadow-2xl shadow-rw-electric/5">
-          <div class="mockup-browser-toolbar">
-            <div class="input bg-rw-dark border-rw-border text-rw-textDim text-sm">https://app.runwave.io/payroll</div>
-          </div>
-          <div class="border-t border-rw-border bg-rw-dark">
-            <!-- Dashboard content built in HTML -->
-            <div class="p-6">
-              <!-- Top bar -->
-              <div class="flex items-center justify-between mb-6">
-                <div class="flex items-center gap-3">
-                  <div class="font-display font-bold text-white text-lg">Payroll Run</div>
-                  <span class="text-xs bg-rw-neon/10 text-rw-neon px-2.5 py-0.5 rounded-full font-medium">March 2026</span>
-                </div>
-                <div class="flex items-center gap-2">
-                  <span class="text-xs text-rw-textDim">52 employees</span>
-                  <span class="text-rw-textDim">|</span>
-                  <span class="text-xs text-rw-textDim">5 countries</span>
-                  <button class="ml-3 bg-rw-electric text-rw-darker text-xs font-display font-semibold px-4 py-1.5 rounded-lg">Run Payroll</button>
-                </div>
-              </div>
-
-              <!-- Stats row -->
-              <div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-6">
-                <div class="bg-rw-surface rounded-lg p-3 border border-rw-border">
-                  <div class="text-xs text-rw-textDim mb-1">Total Gross</div>
-                  <div class="font-display font-bold text-white text-sm">EUR 284,320</div>
-                </div>
-                <div class="bg-rw-surface rounded-lg p-3 border border-rw-border">
-                  <div class="text-xs text-rw-textDim mb-1">Total Net</div>
-                  <div class="font-display font-bold text-white text-sm">EUR 198,024</div>
-                </div>
-                <div class="bg-rw-surface rounded-lg p-3 border border-rw-border">
-                  <div class="text-xs text-rw-textDim mb-1">Tax & Social</div>
-                  <div class="font-display font-bold text-white text-sm">EUR 86,296</div>
-                </div>
-                <div class="bg-rw-surface rounded-lg p-3 border border-rw-border">
-                  <div class="text-xs text-rw-textDim mb-1">Status</div>
-                  <div class="font-display font-bold text-rw-neon text-sm flex items-center gap-1.5">
-                    <span class="w-1.5 h-1.5 rounded-full bg-rw-neon pulse-dot"></span>
-                    All Paid
-                  </div>
-                </div>
-              </div>
-
-              <!-- Employee table -->
-              <div class="rounded-lg border border-rw-border overflow-x-auto">
-                <!-- Table header -->
-                <div class="grid grid-cols-12 gap-2 px-4 py-2.5 bg-rw-surface text-xs text-rw-textDim uppercase tracking-wider min-w-[640px]">
-                  <div class="col-span-3">Employee</div>
-                  <div class="col-span-2">Country</div>
-                  <div class="col-span-2 text-right">Gross</div>
-                  <div class="col-span-2 text-right">Net</div>
-                  <div class="col-span-1 text-right">Tax %</div>
-                  <div class="col-span-2 text-center">Status</div>
-                </div>
-
-                <!-- Rows -->
-                <div class="dashboard-row grid grid-cols-12 gap-2 px-4 py-3 border-t border-rw-border/50 items-center min-w-[640px]">
-                  <div class="col-span-3 flex items-center gap-2">
-                    <div class="w-7 h-7 rounded-full bg-rw-electric/20 flex items-center justify-center text-xs text-rw-electric font-semibold">SV</div>
-                    <span class="text-sm text-white">Sophie Vermeer</span>
-                  </div>
-                  <div class="col-span-2 text-sm text-rw-textMuted flex items-center gap-1.5">
-                    <span class="text-base">&#127475;&#127473;</span> Netherlands
-                  </div>
-                  <div class="col-span-2 text-right text-sm text-white font-display">EUR 6,200</div>
-                  <div class="col-span-2 text-right text-sm text-white font-display">EUR 4,154</div>
-                  <div class="col-span-1 text-right text-sm text-rw-textMuted">33.0%</div>
-                  <div class="col-span-2 text-center">
-                    <span class="inline-flex items-center gap-1 text-xs bg-rw-neon/10 text-rw-neon px-2 py-0.5 rounded-full font-medium">
-                      <svg class="w-3 h-3" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
-                      Paid
-                    </span>
-                  </div>
-                </div>
-
-                <div class="dashboard-row grid grid-cols-12 gap-2 px-4 py-3 border-t border-rw-border/50 items-center min-w-[640px]">
-                  <div class="col-span-3 flex items-center gap-2">
-                    <div class="w-7 h-7 rounded-full bg-rw-violet/20 flex items-center justify-center text-xs text-rw-violet font-semibold">MK</div>
-                    <span class="text-sm text-white">Max Keller</span>
-                  </div>
-                  <div class="col-span-2 text-sm text-rw-textMuted flex items-center gap-1.5">
-                    <span class="text-base">&#127465;&#127466;</span> Germany
-                  </div>
-                  <div class="col-span-2 text-right text-sm text-white font-display">EUR 5,800</div>
-                  <div class="col-span-2 text-right text-sm text-white font-display">EUR 3,654</div>
-                  <div class="col-span-1 text-right text-sm text-rw-textMuted">37.0%</div>
-                  <div class="col-span-2 text-center">
-                    <span class="inline-flex items-center gap-1 text-xs bg-rw-neon/10 text-rw-neon px-2 py-0.5 rounded-full font-medium">
-                      <svg class="w-3 h-3" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
-                      Paid
-                    </span>
-                  </div>
-                </div>
-
-                <div class="dashboard-row grid grid-cols-12 gap-2 px-4 py-3 border-t border-rw-border/50 items-center min-w-[640px]">
-                  <div class="col-span-3 flex items-center gap-2">
-                    <div class="w-7 h-7 rounded-full bg-rw-neon/20 flex items-center justify-center text-xs text-rw-neon font-semibold">LC</div>
-                    <span class="text-sm text-white">Lucas Costa</span>
-                  </div>
-                  <div class="col-span-2 text-sm text-rw-textMuted flex items-center gap-1.5">
-                    <span class="text-base">&#127463;&#127479;</span> Brazil
-                  </div>
-                  <div class="col-span-2 text-right text-sm text-white font-display">BRL 14,500</div>
-                  <div class="col-span-2 text-right text-sm text-white font-display">BRL 10,585</div>
-                  <div class="col-span-1 text-right text-sm text-rw-textMuted">27.0%</div>
-                  <div class="col-span-2 text-center">
-                    <span class="inline-flex items-center gap-1 text-xs bg-rw-neon/10 text-rw-neon px-2 py-0.5 rounded-full font-medium">
-                      <svg class="w-3 h-3" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
-                      Paid
-                    </span>
-                  </div>
-                </div>
-
-                <div class="dashboard-row grid grid-cols-12 gap-2 px-4 py-3 border-t border-rw-border/50 items-center min-w-[640px]">
-                  <div class="col-span-3 flex items-center gap-2">
-                    <div class="w-7 h-7 rounded-full bg-rw-electric/20 flex items-center justify-center text-xs text-rw-electric font-semibold">JC</div>
-                    <span class="text-sm text-white">James Chen</span>
-                  </div>
-                  <div class="col-span-2 text-sm text-rw-textMuted flex items-center gap-1.5">
-                    <span class="text-base">&#127480;&#127468;</span> Singapore
-                  </div>
-                  <div class="col-span-2 text-right text-sm text-white font-display">SGD 8,400</div>
-                  <div class="col-span-2 text-right text-sm text-white font-display">SGD 7,140</div>
-                  <div class="col-span-1 text-right text-sm text-rw-textMuted">15.0%</div>
-                  <div class="col-span-2 text-center">
-                    <span class="inline-flex items-center gap-1 text-xs bg-rw-neon/10 text-rw-neon px-2 py-0.5 rounded-full font-medium">
-                      <svg class="w-3 h-3" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
-                      Paid
-                    </span>
-                  </div>
-                </div>
-
-                <div class="dashboard-row grid grid-cols-12 gap-2 px-4 py-3 border-t border-rw-border/50 items-center min-w-[640px]">
-                  <div class="col-span-3 flex items-center gap-2">
-                    <div class="w-7 h-7 rounded-full bg-rw-violet/20 flex items-center justify-center text-xs text-rw-violet font-semibold">SR</div>
-                    <span class="text-sm text-white">Sarah Rodriguez</span>
-                  </div>
-                  <div class="col-span-2 text-sm text-rw-textMuted flex items-center gap-1.5">
-                    <span class="text-base">&#127482;&#127480;</span> United States
-                  </div>
-                  <div class="col-span-2 text-right text-sm text-white font-display">USD 7,800</div>
-                  <div class="col-span-2 text-right text-sm text-white font-display">USD 5,538</div>
-                  <div class="col-span-1 text-right text-sm text-rw-textMuted">29.0%</div>
-                  <div class="col-span-2 text-center">
-                    <span class="inline-flex items-center gap-1 text-xs bg-rw-neon/10 text-rw-neon px-2 py-0.5 rounded-full font-medium">
-                      <svg class="w-3 h-3" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
-                      Paid
-                    </span>
-                  </div>
-                </div>
-
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-
-  <!-- ========== DANGER — Why incumbents should worry ========== -->
-  <section class="py-24 md:py-32 px-6 relative overflow-hidden">
-    <!-- Red/warning glow -->
-    <div class="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[300px] bg-rw-warning/5 rounded-full blur-[100px]"></div>
-
-    <div class="max-w-4xl mx-auto relative z-10">
-      <div class="text-center mb-16" data-animate>
-        <span class="inline-block text-rw-warning font-display font-semibold text-sm uppercase tracking-widest mb-4">The threat</span>
-        <h2 class="font-display font-bold text-2xl md:text-4xl lg:text-5xl text-white leading-tight max-w-3xl mx-auto">
-          Every global payroll company is a middleman — and RunWave just made middlemen obsolete.
-        </h2>
-      </div>
-
-      <!-- Danger bullets as stark blocks, not cards -->
-      <div class="space-y-6 max-w-3xl mx-auto">
-        <div class="flex items-start gap-5 p-6 rounded-xl border border-rw-warning/20 bg-rw-warning/[0.03]" data-animate>
-          <div class="shrink-0 w-10 h-10 rounded-lg bg-rw-warning/10 flex items-center justify-center mt-0.5">
-            <svg class="w-5 h-5 text-rw-warning" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+      <!-- Feature 1: Forward-looking credit — text left, visual right -->
+      <div class="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center mb-28">
+        <div data-animate-left>
+          <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-coral-500 to-coral-400 flex items-center justify-center mb-6">
+            <svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/>
             </svg>
           </div>
-          <p class="text-rw-text text-base md:text-lg leading-relaxed">
-            The per-employee-per-country pricing model collapses overnight when one AI does the work of 40 local partners.
+          <h3 class="text-2xl md:text-3xl font-bold text-warm-900 mb-4">Forward-looking credit</h3>
+          <p class="text-lg text-warm-900/60 leading-relaxed">
+            We don't dig through your history. We analyse real-time payment data, market trends, sector benchmarks, and your actual cash flow to predict where your business is heading.
           </p>
         </div>
-
-        <div class="flex items-start gap-5 p-6 rounded-xl border border-rw-warning/20 bg-rw-warning/[0.03]" data-animate data-animate-delay="1">
-          <div class="shrink-0 w-10 h-10 rounded-lg bg-rw-warning/10 flex items-center justify-center mt-0.5">
-            <svg class="w-5 h-5 text-rw-warning" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/>
-            </svg>
+        <div data-animate-right class="relative">
+          <div class="rounded-3xl overflow-hidden shadow-lg">
+            <img
+              src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=700&q=80"
+              alt="Data analytics and growth charts"
+              class="w-full h-72 object-cover"
+            >
           </div>
-          <p class="text-rw-text text-base md:text-lg leading-relaxed">
-            Incumbents can't rip out their partner networks without destroying the business model they depend on.
-          </p>
+          <div class="absolute -bottom-4 -left-4 bg-white rounded-xl shadow-md px-4 py-3 border border-gray-100">
+            <div class="flex items-center gap-2">
+              <div class="w-8 h-8 rounded-full bg-emerald-100 flex items-center justify-center">
+                <svg class="w-4 h-4 text-emerald-500" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/>
+                </svg>
+              </div>
+              <span class="text-sm font-semibold text-warm-900">Real-time analysis</span>
+            </div>
+          </div>
         </div>
+      </div>
 
-        <div class="flex items-start gap-5 p-6 rounded-xl border border-rw-warning/20 bg-rw-warning/[0.03]" data-animate data-animate-delay="2">
-          <div class="shrink-0 w-10 h-10 rounded-lg bg-rw-warning/10 flex items-center justify-center mt-0.5">
-            <svg class="w-5 h-5 text-rw-warning" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+      <!-- Feature 2: Minutes, not months — visual left, text right -->
+      <div class="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center mb-28">
+        <div data-animate-left class="relative order-2 lg:order-1">
+          <div class="rounded-3xl overflow-hidden shadow-lg">
+            <img
+              src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=700&q=80"
+              alt="Team celebrating fast results"
+              class="w-full h-72 object-cover"
+            >
+          </div>
+          <div class="absolute -top-4 -right-4 bg-white rounded-xl shadow-md px-4 py-3 border border-gray-100">
+            <div class="flex items-center gap-2">
+              <div class="w-8 h-8 rounded-full bg-coral-100 flex items-center justify-center">
+                <svg class="w-4 h-4 text-coral-500" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+                </svg>
+              </div>
+              <span class="text-sm font-semibold text-warm-900">Decision in 4 min</span>
+            </div>
+          </div>
+        </div>
+        <div data-animate-right class="order-1 lg:order-2">
+          <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-coral-500 to-coral-400 flex items-center justify-center mb-6">
+            <svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
             </svg>
           </div>
-          <p class="text-rw-text text-base md:text-lg leading-relaxed">
-            By the time they build their own AI engine, RunWave already runs payroll for their fastest-growing customers.
+          <h3 class="text-2xl md:text-3xl font-bold text-warm-900 mb-4">Minutes, not months</h3>
+          <p class="text-lg text-warm-900/60 leading-relaxed">
+            Automated credit decisioning means you get a clear yes or no while the opportunity is still on the table. No committees. No waiting.
           </p>
+        </div>
+      </div>
+
+      <!-- Feature 3: An advisor who actually knows you — text left, visual right -->
+      <div class="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
+        <div data-animate-left>
+          <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-coral-500 to-coral-400 flex items-center justify-center mb-6">
+            <svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/>
+            </svg>
+          </div>
+          <h3 class="text-2xl md:text-3xl font-bold text-warm-900 mb-4">An advisor who actually knows you</h3>
+          <p class="text-lg text-warm-900/60 leading-relaxed">
+            Your dedicated advisor is backed by AI that tracks your market, your peers, and your growth patterns. So when they call, it's with an opportunity — not a question about last quarter.
+          </p>
+        </div>
+        <div data-animate-right class="relative">
+          <div class="rounded-3xl overflow-hidden shadow-lg">
+            <img
+              src="https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?w=700&q=80"
+              alt="Professional advisor having a conversation"
+              class="w-full h-72 object-cover"
+            >
+          </div>
+          <div class="absolute -bottom-4 -right-4 bg-white rounded-xl shadow-md px-4 py-3 border border-gray-100">
+            <div class="flex items-center gap-2">
+              <div class="w-8 h-8 rounded-full bg-amber-100 flex items-center justify-center">
+                <svg class="w-4 h-4 text-amber-500" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/>
+                </svg>
+              </div>
+              <span class="text-sm font-semibold text-warm-900">Proactive insights</span>
+            </div>
+          </div>
         </div>
       </div>
     </div>
   </section>
 
+  <!-- ============================================ -->
+  <!-- PRODUCT SHOWCASE — "How Pulse works" -->
+  <!-- ============================================ -->
+  <section id="how" class="py-24 md:py-32 relative warm-blob-1">
+    <div class="max-w-7xl mx-auto px-6">
+      <div class="text-center mb-16" data-animate>
+        <span class="text-coral-500 text-sm font-bold uppercase tracking-widest">How it works</span>
+        <h2 class="text-3xl md:text-4xl font-extrabold text-warm-900 mt-4">How Pulse works</h2>
+        <p class="text-warm-900/50 text-lg mt-4 max-w-lg mx-auto">Three steps. No paperwork. No waiting rooms.</p>
+      </div>
 
-  <!-- ========== CUSTOMER — Built for teams that move fast ========== -->
-  <section class="py-24 md:py-32 px-6 bg-rw-darker">
-    <div class="max-w-4xl mx-auto">
-      <div class="grid md:grid-cols-2 gap-12 items-center">
-        <div data-animate>
-          <span class="inline-block text-rw-neon font-display font-semibold text-sm uppercase tracking-widest mb-4">Built for you</span>
-          <h2 class="font-display font-bold text-3xl md:text-4xl text-white leading-tight mb-4">
-            Built for teams that move fast.
-          </h2>
-          <p class="text-rw-textMuted text-lg leading-relaxed">
-            Tech startups with employees across borders who are tired of paying a small fortune just to get payroll right.
-          </p>
+      <div class="grid lg:grid-cols-5 gap-12 items-center">
+        <!-- Steps column (3/5 width) -->
+        <div class="lg:col-span-3 space-y-0" data-stagger>
+          <!-- Step 1 -->
+          <div class="relative pl-16 pb-14">
+            <!-- Connector line -->
+            <div class="absolute left-6 top-14 bottom-0 w-0.5 bg-gradient-to-b from-coral-400 to-coral-200"></div>
+            <!-- Step number -->
+            <div class="absolute left-0 top-0 w-12 h-12 rounded-full bg-gradient-to-br from-coral-500 to-coral-400 flex items-center justify-center text-white font-extrabold text-lg shadow-lg shadow-coral-200">
+              1
+            </div>
+            <div>
+              <h3 class="text-xl font-bold text-warm-900 mb-2">Connect your data</h3>
+              <p class="text-warm-900/60 leading-relaxed">
+                Link your accounting software and accounts. Pulse starts analysing your real-time financials, market position, and growth trajectory automatically.
+              </p>
+            </div>
+          </div>
+
+          <!-- Step 2 -->
+          <div class="relative pl-16 pb-14">
+            <div class="absolute left-6 top-14 bottom-0 w-0.5 bg-gradient-to-b from-coral-200 to-coral-100"></div>
+            <div class="absolute left-0 top-0 w-12 h-12 rounded-full bg-gradient-to-br from-coral-500 to-coral-400 flex items-center justify-center text-white font-extrabold text-lg shadow-lg shadow-coral-200">
+              2
+            </div>
+            <div>
+              <h3 class="text-xl font-bold text-warm-900 mb-2">Get your credit line</h3>
+              <p class="text-warm-900/60 leading-relaxed">
+                Our AI builds forward-looking scenarios based on your data, sector trends, and peer benchmarks. You get a credit decision in minutes — not weeks.
+              </p>
+            </div>
+          </div>
+
+          <!-- Step 3 -->
+          <div class="relative pl-16">
+            <div class="absolute left-0 top-0 w-12 h-12 rounded-full bg-gradient-to-br from-coral-500 to-coral-400 flex items-center justify-center text-white font-extrabold text-lg shadow-lg shadow-coral-200">
+              3
+            </div>
+            <div>
+              <h3 class="text-xl font-bold text-warm-900 mb-2">Grow with proactive advice</h3>
+              <p class="text-warm-900/60 leading-relaxed">
+                Your dedicated advisor reaches out when they spot an opportunity: a smart moment to invest, expand, or refinance. Backed by data you haven't even seen yet.
+              </p>
+            </div>
+          </div>
         </div>
-        <div data-animate data-animate-delay="1">
-          <div class="relative bg-rw-surface border border-rw-border rounded-2xl p-8">
-            <!-- Quote mark -->
-            <svg class="absolute -top-4 -left-2 w-10 h-10 text-rw-electric/20" fill="currentColor" viewBox="0 0 24 24">
-              <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10H14.017zM0 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151C7.546 6.068 5.983 8.789 5.983 11H10v10H0z"/>
-            </svg>
-            <p class="text-white text-lg md:text-xl leading-relaxed mb-6 italic">
-              "We had providers in the Netherlands, Portugal, and the US. Three dashboards, three invoices, three points of failure. RunWave replaced all of them in one afternoon."
-            </p>
-            <div class="flex items-center gap-3">
-              <div class="w-10 h-10 rounded-full bg-gradient-to-br from-rw-electric to-rw-violet flex items-center justify-center text-white font-display font-bold text-sm">LV</div>
-              <div>
-                <div class="text-white font-display font-semibold text-sm">Lena Visser</div>
-                <div class="text-rw-textDim text-xs">Head of People at Stackfield — 52 employees, 5 countries</div>
+
+        <!-- Phone mockup column (2/5 width) -->
+        <div class="lg:col-span-2 flex justify-center" data-animate-scale>
+          <div class="relative phone-glow">
+            <div class="mockup-phone border-warm-900">
+              <div class="mockup-phone-display">
+                <div class="w-full h-full bg-white" style="min-height: 540px;">
+                  <!-- Connect screen -->
+                  <div class="bg-gradient-to-br from-coral-500 to-coral-400 px-5 pt-5 pb-8">
+                    <p class="text-white/70 text-xs font-medium">Step 1 of 3</p>
+                    <p class="text-white text-lg font-bold mt-1">Connect your data</p>
+                    <div class="w-full bg-white/20 rounded-full h-1.5 mt-3">
+                      <div class="bg-white rounded-full h-1.5" style="width: 33%"></div>
+                    </div>
+                  </div>
+                  <div class="px-4 -mt-4 space-y-3">
+                    <!-- Integration cards -->
+                    <div class="bg-white rounded-xl shadow-sm p-4 border border-gray-100 flex items-center gap-3">
+                      <div class="w-10 h-10 rounded-lg bg-blue-50 flex items-center justify-center">
+                        <svg class="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/></svg>
+                      </div>
+                      <div class="flex-1">
+                        <p class="text-sm font-bold text-warm-900">Exact Online</p>
+                        <p class="text-xs text-warm-900/40">Accounting</p>
+                      </div>
+                      <div class="w-8 h-8 rounded-full bg-emerald-100 flex items-center justify-center">
+                        <svg class="w-4 h-4 text-emerald-500" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+                      </div>
+                    </div>
+                    <div class="bg-white rounded-xl shadow-sm p-4 border border-gray-100 flex items-center gap-3">
+                      <div class="w-10 h-10 rounded-lg bg-purple-50 flex items-center justify-center">
+                        <svg class="w-5 h-5 text-purple-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"/></svg>
+                      </div>
+                      <div class="flex-1">
+                        <p class="text-sm font-bold text-warm-900">Business account</p>
+                        <p class="text-xs text-warm-900/40">Payment data</p>
+                      </div>
+                      <div class="w-8 h-8 rounded-full bg-emerald-100 flex items-center justify-center">
+                        <svg class="w-4 h-4 text-emerald-500" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+                      </div>
+                    </div>
+                    <div class="bg-white rounded-xl shadow-sm p-4 border border-gray-100 flex items-center gap-3">
+                      <div class="w-10 h-10 rounded-lg bg-green-50 flex items-center justify-center">
+                        <svg class="w-5 h-5 text-green-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/></svg>
+                      </div>
+                      <div class="flex-1">
+                        <p class="text-sm font-bold text-warm-900">Shopify</p>
+                        <p class="text-xs text-warm-900/40">E-commerce</p>
+                      </div>
+                      <div class="w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center">
+                        <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"/></svg>
+                      </div>
+                    </div>
+                    <!-- Analysis running -->
+                    <div class="bg-coral-50 rounded-xl p-4 border border-coral-100 mt-3">
+                      <div class="flex items-center gap-3">
+                        <div class="w-5 h-5 border-2 border-coral-500 border-t-transparent rounded-full animate-spin"></div>
+                        <div>
+                          <p class="text-sm font-semibold text-warm-900">Analysing your data...</p>
+                          <p class="text-xs text-warm-900/50">Building growth trajectory</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -817,73 +620,188 @@
     </div>
   </section>
 
+  <!-- ============================================ -->
+  <!-- DANGER — "Why existing players should worry" -->
+  <!-- ============================================ -->
+  <section class="py-24 md:py-32 danger-bg relative overflow-hidden">
+    <!-- Warm accent glow -->
+    <div class="absolute top-0 left-1/4 w-96 h-96 bg-coral-500/5 rounded-full blur-3xl pointer-events-none"></div>
+    <div class="absolute bottom-0 right-1/4 w-72 h-72 bg-coral-400/5 rounded-full blur-3xl pointer-events-none"></div>
 
-  <!-- ========== CTA — Inline form ========== -->
-  <section class="py-24 md:py-32 px-6 relative overflow-hidden">
-    <!-- Electric glow -->
-    <div class="absolute bottom-0 left-1/2 -translate-x-1/2 w-[500px] h-[250px] bg-rw-electric/8 rounded-full blur-[80px]"></div>
-
-    <div class="max-w-2xl mx-auto text-center relative z-10" data-animate>
-      <h2 class="font-display font-bold text-3xl md:text-5xl text-white leading-tight mb-4">
-        Stop managing vendors.<br>
-        <span class="bg-gradient-to-r from-rw-electric to-rw-neon bg-clip-text text-transparent">Start paying people.</span>
-      </h2>
-      <p class="text-rw-textMuted text-lg mb-10">
-        Set up your first payroll run in under 5 minutes.
-      </p>
-      <div class="flex flex-col sm:flex-row items-center justify-center gap-3 max-w-md mx-auto">
-        <input type="email" placeholder="your@company.com" class="w-full sm:flex-1 bg-rw-surface border border-rw-border rounded-full px-5 py-3.5 text-white text-sm placeholder-rw-textDim focus:outline-none focus:border-rw-electric transition-colors">
-        <button class="glow-btn w-full sm:w-auto bg-rw-electric text-rw-darker font-display font-semibold text-sm px-8 py-3.5 rounded-full hover:bg-white transition-all whitespace-nowrap">
-          Get early access
-        </button>
+    <div class="max-w-4xl mx-auto px-6 text-center">
+      <div data-animate>
+        <span class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-coral-500/10 text-coral-400 text-sm font-semibold mb-8">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/>
+          </svg>
+          Why existing players should be worried
+        </span>
+        <h2 class="text-3xl md:text-4xl lg:text-5xl font-extrabold text-white leading-tight mb-12">
+          By the time your lender finishes reviewing your annual report, Pulse clients have already funded their next move.
+        </h2>
       </div>
-      <p class="text-rw-textDim text-xs mt-4">Free for teams under 10. No credit card needed.</p>
+
+      <div class="grid md:grid-cols-3 gap-6 mt-8" data-stagger>
+        <div class="bg-white/5 backdrop-blur-sm rounded-2xl p-6 border border-white/10 text-left">
+          <div class="w-10 h-10 rounded-xl bg-coral-500/20 flex items-center justify-center mb-4">
+            <svg class="w-5 h-5 text-coral-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/>
+            </svg>
+          </div>
+          <p class="text-white/90 text-base leading-relaxed">
+            We approve credit based on where your business is going — not where it's been. Traditional risk models can't compete with that.
+          </p>
+        </div>
+        <div class="bg-white/5 backdrop-blur-sm rounded-2xl p-6 border border-white/10 text-left">
+          <div class="w-10 h-10 rounded-xl bg-coral-500/20 flex items-center justify-center mb-4">
+            <svg class="w-5 h-5 text-coral-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"/>
+            </svg>
+          </div>
+          <p class="text-white/90 text-base leading-relaxed">
+            Our advisors reach out with opportunities before you even know to ask. Your current lender waits for you to call them.
+          </p>
+        </div>
+        <div class="bg-white/5 backdrop-blur-sm rounded-2xl p-6 border border-white/10 text-left">
+          <div class="w-10 h-10 rounded-xl bg-coral-500/20 flex items-center justify-center mb-4">
+            <svg class="w-5 h-5 text-coral-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z"/>
+            </svg>
+          </div>
+          <p class="text-white/90 text-base leading-relaxed">
+            Gen Z founders don't want to upload PDFs and wait for committees. They want answers now. We're built for how they work.
+          </p>
+        </div>
+      </div>
     </div>
   </section>
 
-
-  <!-- ========== FOOTER ========== -->
-  <footer class="border-t border-rw-border py-10 px-6">
-    <div class="max-w-5xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
-      <div class="flex items-center gap-2">
-        <span class="inline-block w-6 h-6 rounded-md bg-gradient-to-br from-rw-electric to-rw-violet flex items-center justify-center">
-          <svg class="w-3.5 h-3.5 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z"/>
-          </svg>
-        </span>
-        <span class="font-display font-bold text-white text-sm">RunWave</span>
+  <!-- ============================================ -->
+  <!-- CUSTOMER — Testimonial with photo -->
+  <!-- ============================================ -->
+  <section class="py-24 md:py-32 relative bg-white">
+    <div class="max-w-7xl mx-auto px-6">
+      <div class="text-center mb-4" data-animate>
+        <span class="text-coral-500 text-sm font-bold uppercase tracking-widest">Built for the next generation</span>
       </div>
-      <p class="text-rw-textDim text-sm text-center">One click. Every country. Paid.</p>
-      <p class="text-rw-textDim text-xs">&copy; 2026 RunWave &middot; Built at AI Lab</p>
+
+      <div class="max-w-4xl mx-auto" data-animate>
+        <p class="text-center text-warm-900/60 text-lg mb-16 max-w-2xl mx-auto">
+          Pulse is made for fast-growing Dutch businesses led by founders who run lean, think fast, and refuse to let their financial partner slow them down.
+        </p>
+
+        <!-- Testimonial card -->
+        <div class="relative bg-warm-50 rounded-3xl p-8 md:p-12 border border-warm-200/60">
+          <!-- Quote mark -->
+          <div class="absolute -top-5 left-8 md:left-12">
+            <div class="w-10 h-10 rounded-full bg-coral-500 flex items-center justify-center">
+              <svg class="w-5 h-5 text-white" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10H14.017zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10H0z"/>
+              </svg>
+            </div>
+          </div>
+
+          <div class="grid md:grid-cols-4 gap-8 items-center">
+            <!-- Photo -->
+            <div class="md:col-span-1 flex justify-center md:justify-start">
+              <div class="w-24 h-24 md:w-full md:h-auto md:aspect-square rounded-2xl overflow-hidden shadow-md">
+                <img
+                  src="https://images.unsplash.com/photo-1580489944761-15a19d654956?w=400&q=80"
+                  alt="Sanne de Vries"
+                  class="w-full h-full object-cover"
+                >
+              </div>
+            </div>
+            <!-- Quote -->
+            <div class="md:col-span-3">
+              <blockquote class="text-warm-900 text-lg md:text-xl leading-relaxed font-medium mb-6">
+                "We were growing 40% year-on-year and our previous partner still wanted three months of paperwork before they'd even discuss a credit line. Pulse looked at our data, understood our trajectory, and said yes in one afternoon. And last month, our advisor called us with an acquisition opportunity we hadn't even considered. That's a partner that gets it."
+              </blockquote>
+              <div>
+                <p class="font-bold text-warm-900">Sanne de Vries</p>
+                <p class="text-warm-900/50 text-sm">CEO — Brandward (€18M digital commerce, 22 employees)</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Trust metrics -->
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-6 mt-16 max-w-3xl mx-auto" data-stagger>
+        <div class="text-center">
+          <p class="text-3xl md:text-4xl font-extrabold text-coral-500">4 min</p>
+          <p class="text-sm text-warm-900/50 mt-1">Average credit decision</p>
+        </div>
+        <div class="text-center">
+          <p class="text-3xl md:text-4xl font-extrabold text-coral-500">€1.2B</p>
+          <p class="text-sm text-warm-900/50 mt-1">Credit approved</p>
+        </div>
+        <div class="text-center">
+          <p class="text-3xl md:text-4xl font-extrabold text-coral-500">2,400+</p>
+          <p class="text-sm text-warm-900/50 mt-1">Businesses on Pulse</p>
+        </div>
+        <div class="text-center">
+          <p class="text-3xl md:text-4xl font-extrabold text-coral-500">94%</p>
+          <p class="text-sm text-warm-900/50 mt-1">Would recommend</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================ -->
+  <!-- FOOTER — CTA + branded footer -->
+  <!-- ============================================ -->
+  <footer class="relative overflow-hidden">
+    <!-- CTA section -->
+    <div class="bg-gradient-to-br from-coral-500 to-coral-400 py-20 md:py-28 relative">
+      <div class="absolute inset-0 opacity-10">
+        <div class="absolute top-10 left-10 w-40 h-40 rounded-full border-2 border-white"></div>
+        <div class="absolute bottom-10 right-20 w-64 h-64 rounded-full border border-white"></div>
+        <div class="absolute top-1/2 left-1/3 w-20 h-20 rounded-full border border-white"></div>
+      </div>
+      <div class="max-w-3xl mx-auto px-6 text-center relative" data-animate>
+        <h2 class="text-3xl md:text-4xl lg:text-5xl font-extrabold text-white leading-tight mb-6">
+          Ready to outgrow your current financial partner?
+        </h2>
+        <p class="text-white/80 text-lg mb-10 max-w-lg mx-auto">
+          Connect your data. Get a credit decision in minutes. Start growing with an advisor who actually understands your business.
+        </p>
+        <a href="#" class="inline-flex items-center gap-2 bg-white text-coral-600 font-bold px-8 py-4 rounded-full text-lg hover:shadow-xl hover:shadow-white/20 transition-all duration-300 hover:-translate-y-1">
+          Get started with Pulse
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6"/>
+          </svg>
+        </a>
+      </div>
+    </div>
+
+    <!-- Footer bottom -->
+    <div class="bg-warm-900 py-8">
+      <div class="max-w-7xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-4">
+        <div class="flex items-center gap-2.5">
+          <div class="w-7 h-7 rounded-lg bg-gradient-to-br from-coral-500 to-coral-400 flex items-center justify-center">
+            <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M3.5 12h3l2.5-7 4 14 3-7h4"/>
+            </svg>
+          </div>
+          <span class="text-white/80 text-sm font-semibold">Pulse</span>
+        </div>
+        <p class="text-white/40 text-sm text-center">
+          Your business moves fast. So should your financial partner.
+        </p>
+        <p class="text-white/30 text-xs">
+          &copy; 2026 Pulse &middot; Built at AI Lab
+        </p>
+      </div>
     </div>
   </footer>
-
 
   <!-- FlyonUI JS -->
   <script src="https://cdn.jsdelivr.net/npm/flyonui@2.4.1/flyonui.js"></script>
 
+  <!-- Scroll animations & nav effect -->
   <script>
-    // Immediately show above-fold elements on load
-    function showHeroElements() {
-      // Nav
-      const nav = document.querySelector('nav');
-      if (nav) nav.classList.add('animate-visible');
-
-      // All animated elements inside the hero section (first section)
-      const heroSection = document.querySelector('.hero-bg');
-      if (heroSection) {
-        const heroAnimated = heroSection.querySelectorAll('[data-animate]');
-        heroAnimated.forEach((el, i) => {
-          setTimeout(() => el.classList.add('animate-visible'), 100 + (i * 100));
-        });
-      }
-    }
-
-    // Run immediately and also after a short delay as fallback
-    showHeroElements();
-    setTimeout(showHeroElements, 200);
-
-    // Scroll-triggered animations for below-fold elements
+    // Scroll-triggered animations
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
@@ -891,57 +809,28 @@
           observer.unobserve(entry.target);
         }
       });
-    }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
+    }, { threshold: 0.1, rootMargin: '0px 0px -60px 0px' });
 
-    // Only observe elements NOT in the hero
-    document.querySelectorAll('[data-animate]').forEach(el => {
-      const heroSection = document.querySelector('.hero-bg');
-      if (!heroSection || !heroSection.contains(el)) {
-        observer.observe(el);
-      }
+    document.querySelectorAll('[data-animate], [data-animate-left], [data-animate-right], [data-animate-scale], [data-stagger]').forEach(el => {
+      observer.observe(el);
     });
 
-    // Counter animation for stats
-    function animateCounters() {
-      const counters = document.querySelectorAll('.count-up');
-      counters.forEach(counter => {
-        const text = counter.textContent.trim();
-        // Only animate the "80+" counter
-        if (text.includes('80')) {
-          let current = 0;
-          const target = 80;
-          const duration = 1500;
-          const start = performance.now();
-
-          function tick(now) {
-            const elapsed = now - start;
-            const progress = Math.min(elapsed / duration, 1);
-            const eased = 1 - Math.pow(1 - progress, 3);
-            current = Math.round(eased * target);
-            counter.textContent = current + '+';
-            if (progress < 1) requestAnimationFrame(tick);
-          }
-          requestAnimationFrame(tick);
-        }
-      });
-    }
-
-    // Trigger counters when hero stats become visible
-    const statsObserver = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          animateCounters();
-          statsObserver.unobserve(entry.target);
-        }
-      });
-    }, { threshold: 0.5 });
-
-    const statsGrid = document.querySelector('.count-up')?.closest('.grid');
-    if (statsGrid) statsObserver.observe(statsGrid);
+    // Nav background on scroll
+    const nav = document.getElementById('mainNav');
+    let lastScroll = 0;
+    window.addEventListener('scroll', () => {
+      const currentScroll = window.scrollY;
+      if (currentScroll > 50) {
+        nav.classList.add('nav-scrolled');
+      } else {
+        nav.classList.remove('nav-scrolled');
+      }
+      lastScroll = currentScroll;
+    }, { passive: true });
 
     // Smooth scroll for anchor links
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-      anchor.addEventListener('click', function (e) {
+      anchor.addEventListener('click', function(e) {
         e.preventDefault();
         const target = document.querySelector(this.getAttribute('href'));
         if (target) {
@@ -950,16 +839,49 @@
       });
     });
 
-    // Nav background on scroll
-    const nav = document.querySelector('nav');
-    window.addEventListener('scroll', () => {
-      if (window.scrollY > 80) {
-        nav.style.backgroundColor = 'rgba(10, 10, 15, 0.95)';
-      } else {
-        nav.style.backgroundColor = 'rgba(10, 10, 15, 0.9)';
-      }
-    });
-  </script>
+    // Animate stats on scroll (count up)
+    const statObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const el = entry.target;
+          const text = el.textContent;
+          // Only animate numbers
+          const match = text.match(/^([\d.,]+)/);
+          if (match) {
+            const finalNum = parseFloat(match[1].replace(',', ''));
+            const suffix = text.replace(match[1], '');
+            const prefix = text.includes('€') ? '€' : '';
+            const cleanSuffix = suffix.replace('€', '');
+            let current = 0;
+            const duration = 1500;
+            const steps = 40;
+            const increment = finalNum / steps;
+            const interval = duration / steps;
+            const hasDecimal = match[1].includes('.');
 
+            const counter = setInterval(() => {
+              current += increment;
+              if (current >= finalNum) {
+                el.textContent = text;
+                clearInterval(counter);
+              } else {
+                el.textContent = prefix + (hasDecimal ? current.toFixed(1) : Math.floor(current).toLocaleString()) + cleanSuffix;
+              }
+            }, interval);
+          }
+          statObserver.unobserve(el);
+        }
+      });
+    }, { threshold: 0.5 });
+
+    // Observe stat values (delayed to ensure DOM ready)
+    setTimeout(() => {
+      document.querySelectorAll('[data-stagger] .text-coral-500').forEach(el => {
+        if (el.textContent.match(/[\d]/)) {
+          statObserver.observe(el);
+        }
+      });
+    }, 100);
+  </script>
 </body>
 </html>
